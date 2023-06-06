@@ -51,26 +51,18 @@ position = Vector2(1313, -747)
 [node name="LobbyCamera" type="Camera2D" parent="."]
 zoom = Vector2(0.225, 0.225)
 
-[node name="Button" type="Button" parent="LobbyCamera"]
-offset_left = -155.0
-offset_top = -1410.0
-offset_right = 149.0
-offset_bottom = -1265.0
-theme_override_font_sizes/font_size = 100
-text = "Ready"
-
 [node name="RichTextLabel" type="RichTextLabel" parent="LobbyCamera"]
 offset_left = -2563.0
-offset_top = 561.0
-offset_right = -1210.0
-offset_bottom = 1256.0
-theme_override_font_sizes/normal_font_size = 100
-fit_content = true
+offset_top = 687.0
+offset_right = -1417.0
+offset_bottom = 1259.0
+theme_override_font_sizes/normal_font_size = 50
+scroll_following = true
 script = ExtResource("4_dww8o")
 
 [node name="LineEdit" type="LineEdit" parent="LobbyCamera"]
 offset_left = -2547.0
 offset_top = 1276.0
-offset_right = -1204.0
+offset_right = -1421.0
 offset_bottom = 1421.0
-theme_override_font_sizes/font_size = 100
+theme_override_font_sizes/font_size = 50

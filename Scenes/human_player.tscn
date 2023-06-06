@@ -1,14 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://cpl32lvhwd5da"]
 
-[ext_resource type="Script" path="res://Scripts/PlayerStateMachine/human_controller.gd" id="1_pu5r2"]
+[ext_resource type="Script" path="res://Scripts/PlayerStateMachine/human_controller.gd" id="1_4thxs"]
 [ext_resource type="Theme" uid="uid://d26ldkm1br1bo" path="res://UI_Theme.tres" id="2_ja0q8"]
 
 [node name="HumanPlayer" type="Node2D"]
-script = ExtResource("1_pu5r2")
+script = ExtResource("1_4thxs")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
+zoom = Vector2(0.4, 0.4)
 
 [node name="UI" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -16,6 +19,7 @@ offset_bottom = 40.0
 theme = ExtResource("2_ja0q8")
 
 [node name="Cash" type="Label" parent="UI"]
+visible = false
 layout_mode = 0
 offset_left = -561.0
 offset_top = -27.0
@@ -24,6 +28,7 @@ offset_bottom = -1.0
 text = "$100"
 
 [node name="Profit" type="Label" parent="UI"]
+visible = false
 layout_mode = 0
 offset_left = -521.0
 offset_top = -27.0
@@ -34,6 +39,7 @@ text = "+23
 "
 
 [node name="Loss" type="Label" parent="UI"]
+visible = false
 layout_mode = 0
 offset_left = -491.0
 offset_top = -27.0
@@ -43,6 +49,7 @@ theme_override_colors/font_color = Color(0.909804, 0, 0, 1)
 text = "-38"
 
 [node name="Phase" type="Label" parent="UI"]
+visible = false
 layout_mode = 0
 offset_left = -113.0
 offset_top = -311.0
@@ -50,13 +57,20 @@ offset_right = 103.0
 offset_bottom = -285.0
 text = "{Management / Shift} Phase"
 
-[node name="Label" type="Label" parent="UI"]
+[node name="LobbyReadyButton" type="Button" parent="UI"]
 layout_mode = 0
-offset_left = -397.0
-offset_top = -938.0
-offset_right = 401.0
-offset_bottom = -798.0
-theme_override_font_sizes/font_size = 100
-text = "99999999999999"
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_left = -26.0
+offset_top = -313.0
+offset_right = 30.0
+offset_bottom = -282.0
+text = "Ready"
+
+[node name="LobbyReadyLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = -309.0
+offset_right = 79.0
+offset_bottom = -283.0
+text = "0/4"
+
+[connection signal="pressed" from="UI/LobbyReadyButton" to="." method="_on_lobby_ready_button_pressed"]

@@ -20,7 +20,9 @@ const CLIENT_DECK_SAVE_PATH = "user://client_deck.json"
 @export var seat3: Node2D
 @export var seat4: Node2D
 
-var players = 0
+var networked_controllers: Array[HumanController] = []
+var players = []
+var readied_players = []
 
 var _worker_scene = preload("res://Scenes/worker_card.tscn")
 var _client_scene = preload("res://Scenes/client_card.tscn")
@@ -72,32 +74,49 @@ func _load_clients():
 	client_deck.shuffle()
 
 
-@rpc
+@rpc #Called by the network lobby code
 func add_player(id: int, username: String, type: PlayerType) -> void:
-	if players >= 4:
+	if players.size() > 4:
 		return
 	if type == null:
 		type = PlayerType.HUMAN
 	var board = _player_scene.instantiate()
-	match players:
+	match players.size():
 		0:
-			board.position = seat1.position
+			board.global_position = seat1.position
 		1:
-			board.position = seat2.position
+			board.global_position = seat2.position
 		2:
-			board.position = seat3.position
+			board.global_position = seat3.position
 		3:
-			board.position = seat4.position
+			board.global_position = seat4.position
 	$Players.add_child(board)
 	var controller
 	match type:
 		PlayerType.HUMAN:
 			controller = _human_scene.instantiate()
+			networked_controllers.append(controller)
 		PlayerType.BOT:
 			controller = _bot_scene.instantiate()
 	controller.name = str(id)
 	controller.set_multiplayer_authority(id)
-	controller.get_node("UI/Label").text = str(username)
+	controller.own_id = id
+	controller.game = self as Game
+	controller.board = board as PlayerBoard
 	board.add_child(controller)
-	players += 1
+	players.append(id)
+	for player in networked_controllers:
+		player.rpc("update_ready_label")
 
+
+func ready_player(id):
+	if not readied_players.has(id):
+		readied_players.append(id)
+	if readied_players.size() == players.size():
+		start_game()
+	for player in networked_controllers:
+		player.rpc("update_ready_label")
+
+
+func start_game():
+	print("Game started!")
