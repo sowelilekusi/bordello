@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvxgkv7pwxh7"]
+
+[ext_resource type="Script" path="res://PlayerBoard.gd" id="1_80bvu"]
+[ext_resource type="Texture2D" uid="uid://olxh7d7xkr5k" path="res://Assets/player_board.png" id="2_rx76r"]
+[ext_resource type="PackedScene" uid="uid://y2i3u6n1oowh" path="res://Scenes/deck.tscn" id="3_ypq4b"]
+[ext_resource type="PackedScene" uid="uid://baoec8cqmedf6" path="res://Scenes/worker_slot.tscn" id="4_o73ea"]
+
+[node name="PlayerBoard" type="Node2D"]
+script = ExtResource("1_80bvu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_rx76r")
+
+[node name="ShiftDeck" parent="." instance=ExtResource("3_ypq4b")]
+position = Vector2(835, -345)
+type = 1
+
+[node name="GreatDeck" parent="." instance=ExtResource("3_ypq4b")]
+position = Vector2(85, -345)
+type = 1
+
+[node name="GoodDeck" parent="." instance=ExtResource("3_ypq4b")]
+position = Vector2(-385, -345)
+type = 1
+
+[node name="PoorDeck" parent="." instance=ExtResource("3_ypq4b")]
+position = Vector2(-855, -345)
+type = 1
+
+[node name="Slot1" parent="." instance=ExtResource("4_o73ea")]
+position = Vector2(-805, 235)
+
+[node name="Slot2" parent="." instance=ExtResource("4_o73ea")]
+position = Vector2(-275, 235)
+
+[node name="Slot3" parent="." instance=ExtResource("4_o73ea")]
+position = Vector2(255, 235)
+
+[node name="Slot4" parent="." instance=ExtResource("4_o73ea")]
+position = Vector2(785, 235)

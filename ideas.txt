@@ -1,0 +1,10 @@
+#Ideas okay?
+#Make the client cards have a little progress track thats like how much they like their service right,
+#put the poor/good/great blocks along that track, and instead of the services having that each service 
+#contributes a different number of points along that other track, so the money you recieve for making
+#the match can be the same across all clients, but it shows how some clients value one more over the other
+#without actually requiring you to have any specific one as long as you have enough turns to get them along
+#the track, so a short session with all the perks can be a great service but a less special or less
+#stress inducing session needs to be longer so the same worker needs to remain occupied longer, and it gives
+#you more to do on your turn because you get to decide what all your little workers do rather than them only
+#being interacted with when you're placing down a client card

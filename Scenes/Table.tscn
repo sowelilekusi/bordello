@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://x8fd0k3qhn1x"]
+
+[ext_resource type="Texture2D" uid="uid://crk6m37iy1itk" path="res://Assets/table.png" id="1_gchuv"]
+[ext_resource type="Script" path="res://Scripts/game.gd" id="1_ne3d3"]
+[ext_resource type="Script" path="res://Scripts/chat.gd" id="4_dww8o"]
+[ext_resource type="PackedScene" uid="uid://y2i3u6n1oowh" path="res://Scenes/deck.tscn" id="4_ugbip"]
+
+[node name="Table" type="Node2D" node_paths=PackedStringArray("worker_deck", "client_deck", "worker_discard", "client_discard", "seat1", "seat2", "seat3", "seat4")]
+script = ExtResource("1_ne3d3")
+worker_deck = NodePath("Workers")
+client_deck = NodePath("Clients")
+worker_discard = NodePath("WorkerDiscard")
+client_discard = NodePath("ClientDiscard")
+seat1 = NodePath("Seat1")
+seat2 = NodePath("Seat2")
+seat3 = NodePath("Seat3")
+seat4 = NodePath("Seat4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(5, 5)
+texture = ExtResource("1_gchuv")
+
+[node name="Workers" parent="." instance=ExtResource("4_ugbip")]
+position = Vector2(-3244, -211)
+
+[node name="WorkerDiscard" parent="." instance=ExtResource("4_ugbip")]
+position = Vector2(-3244, 212)
+
+[node name="Clients" parent="." instance=ExtResource("4_ugbip")]
+position = Vector2(-2820, -211)
+type = 1
+
+[node name="ClientDiscard" parent="." instance=ExtResource("4_ugbip")]
+position = Vector2(-2820, 212)
+type = 1
+
+[node name="Seat1" type="Node2D" parent="."]
+position = Vector2(1315, 738)
+
+[node name="Seat2" type="Node2D" parent="."]
+position = Vector2(-1342, 728)
+
+[node name="Seat3" type="Node2D" parent="."]
+position = Vector2(-1341, -737)
+
+[node name="Seat4" type="Node2D" parent="."]
+position = Vector2(1313, -747)
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="LobbyCamera" type="Camera2D" parent="."]
+zoom = Vector2(0.225, 0.225)
+
+[node name="Button" type="Button" parent="LobbyCamera"]
+offset_left = -155.0
+offset_top = -1410.0
+offset_right = 149.0
+offset_bottom = -1265.0
+theme_override_font_sizes/font_size = 100
+text = "Ready"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LobbyCamera"]
+offset_left = -2563.0
+offset_top = 561.0
+offset_right = -1210.0
+offset_bottom = 1256.0
+theme_override_font_sizes/normal_font_size = 100
+fit_content = true
+script = ExtResource("4_dww8o")
+
+[node name="LineEdit" type="LineEdit" parent="LobbyCamera"]
+offset_left = -2547.0
+offset_top = 1276.0
+offset_right = -1204.0
+offset_bottom = 1421.0
+theme_override_font_sizes/font_size = 100

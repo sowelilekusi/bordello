@@ -1,6 +1,6 @@
 extends Node2D
 
-var card_scene = preload("res://Scenes/card.tscn")
+var card_scene = preload("res://Scenes/worker_card.tscn")
 var icon_order = [0, 1, 3, 5, 7, 8, 6, 4, 2]
 var symbol_buttons : Array[TextureButton] = []
 var symbol_count_labels : Array[LineEdit] = []

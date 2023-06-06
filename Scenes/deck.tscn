@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://y2i3u6n1oowh"]
+
+[ext_resource type="Script" path="res://Scripts/deck.gd" id="1_3qpwi"]
+[ext_resource type="Texture2D" uid="uid://s8r4ura4chsf" path="res://Assets/client_deck.png" id="2_v2nvn"]
+[ext_resource type="Texture2D" uid="uid://ch8n7vn43fg0p" path="res://Assets/worker_deck.png" id="3_h83vm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2yi2r"]
+size = Vector2(350, 250)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5k83"]
+size = Vector2(250, 350)
+
+[node name="Deck" type="Node2D"]
+script = ExtResource("1_3qpwi")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="ClientSprite" type="Sprite2D" parent="Area2D"]
+texture = ExtResource("2_v2nvn")
+
+[node name="WorkerSprite" type="Sprite2D" parent="Area2D"]
+texture = ExtResource("3_h83vm")
+
+[node name="ClientShape" type="CollisionShape2D" parent="Area2D"]
+visible = false
+shape = SubResource("RectangleShape2D_2yi2r")
+disabled = true
+
+[node name="WorkerShape" type="CollisionShape2D" parent="Area2D"]
+visible = false
+shape = SubResource("RectangleShape2D_y5k83")
+disabled = true
+
+[node name="Worker" type="Node2D" parent="."]
+position = Vector2(-125, -175)
+
+[node name="Client" type="Node2D" parent="."]
+position = Vector2(-175, -125)
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

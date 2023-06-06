@@ -1,25 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://baoec8cqmedf6"]
+[gd_scene load_steps=5 format=3 uid="uid://baoec8cqmedf6"]
 
-[ext_resource type="Script" path="res://Scripts/slot_button.gd" id="1_fras1"]
+[ext_resource type="Script" path="res://Scripts/worker_slot.gd" id="1_0xyh3"]
+[ext_resource type="Texture2D" uid="uid://cpitf556hf0g" path="res://Assets/worker_slot.png" id="1_fxq0t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1gv0f"]
-size = Vector2(152, 214)
+size = Vector2(250, 350)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_27hn2"]
+size = Vector2(350, 250)
 
 [node name="Worker Slot" type="Node2D"]
-script = ExtResource("1_fras1")
+script = ExtResource("1_0xyh3")
 
-[node name="Label" type="Label" parent="."]
-offset_left = -72.0
-offset_top = -14.0
-offset_right = 72.0
-offset_bottom = 12.0
-text = "Empty Worker Slot"
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_fxq0t")
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-76, -103)
+[node name="Worker" type="Area2D" parent="."]
+position = Vector2(-225, -175)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(76, 107)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Worker"]
+visible = false
+position = Vector2(125, 175)
 shape = SubResource("RectangleShape2D_1gv0f")
 
-[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[node name="Client" type="Area2D" parent="."]
+position = Vector2(-125, -175)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Client"]
+visible = false
+position = Vector2(175, 125)
+shape = SubResource("RectangleShape2D_27hn2")

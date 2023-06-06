@@ -31,7 +31,6 @@ font_size = 24
 size = Vector2(250, 350)
 
 [node name="Card" type="Node2D"]
-position = Vector2(125, 175)
 script = ExtResource("1_bry7w")
 spread_curve = SubResource("Curve_7kl8o")
 height_curve = SubResource("Curve_b6tcq")
@@ -42,6 +41,7 @@ hand_rotation = 0.2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+position = Vector2(125, 175)
 texture = ExtResource("2_taqnr")
 
 [node name="Title" type="Label" parent="Sprite2D"]
@@ -151,15 +151,16 @@ texture = ExtResource("5_a2bm7")
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="Area2D" type="Area2D" parent="." groups=["Card"]]
+position = Vector2(125, 175)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_awcy0")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 127.0
-offset_top = 153.0
-offset_right = 167.0
-offset_bottom = 179.0
+offset_left = 252.0
+offset_top = 328.0
+offset_right = 292.0
+offset_bottom = 354.0
 text = "0"
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
