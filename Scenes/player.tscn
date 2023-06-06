@@ -1,0 +1,278 @@
+[gd_scene load_steps=7 format=3 uid="uid://cuptyfol5sy52"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_5kyvf"]
+[ext_resource type="PackedScene" uid="uid://baoec8cqmedf6" path="res://Scenes/worker_slot.tscn" id="2_ugx0h"]
+[ext_resource type="PackedScene" uid="uid://y2i3u6n1oowh" path="res://Scenes/card_pile.tscn" id="3_gwbfn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_78syh"]
+size = Vector2(920, 268)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vw0g8"]
+size = Vector2(308, 269)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jxmks"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_5kyvf")
+seconds_to_hide_hand = 0.3
+seconds_to_show_hand = 0.3
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Money" type="Label" parent="Camera2D"]
+offset_left = -860.0
+offset_top = -154.0
+offset_right = -803.0
+offset_bottom = -14.0
+theme_override_font_sizes/font_size = 80
+text = "$"
+
+[node name="Payout" type="Label" parent="Camera2D"]
+offset_left = -624.0
+offset_top = -154.0
+offset_right = -567.0
+offset_bottom = -14.0
+theme_override_colors/font_color = Color(0, 0.858824, 0, 1)
+theme_override_font_sizes/font_size = 80
+
+[node name="Cost" type="Label" parent="Camera2D"]
+offset_left = -624.0
+offset_top = -154.0
+offset_right = -567.0
+offset_bottom = -14.0
+theme_override_colors/font_color = Color(0.839216, 0, 0.105882, 1)
+theme_override_font_sizes/font_size = 80
+
+[node name="PhaseLabel" type="Label" parent="Camera2D"]
+offset_left = -151.0
+offset_top = -518.0
+offset_right = 117.0
+offset_bottom = -476.0
+theme_override_font_sizes/font_size = 28
+text = "Management Phase"
+
+[node name="EndManagement" type="Button" parent="Camera2D"]
+offset_left = 138.0
+offset_top = -530.0
+offset_right = 483.0
+offset_bottom = -467.0
+theme_override_font_sizes/font_size = 40
+text = "End Management"
+
+[node name="EndShift" type="Button" parent="Camera2D"]
+visible = false
+offset_left = 138.0
+offset_top = -530.0
+offset_right = 317.0
+offset_bottom = -467.0
+theme_override_font_sizes/font_size = 40
+text = "End Shift
+"
+
+[node name="EndTurn" type="Button" parent="Camera2D"]
+visible = false
+offset_left = 699.0
+offset_top = -525.0
+offset_right = 879.0
+offset_bottom = -462.0
+theme_override_font_sizes/font_size = 40
+text = "End Turn"
+
+[node name="EndDraft" type="Button" parent="Camera2D"]
+visible = false
+offset_left = -214.0
+offset_top = 275.0
+offset_right = 184.0
+offset_bottom = 420.0
+theme_override_font_sizes/font_size = 100
+text = "Confirm"
+
+[node name="CancelDraft" type="Button" parent="Camera2D"]
+visible = false
+offset_left = -435.0
+offset_top = 313.0
+offset_right = -266.0
+offset_bottom = 390.0
+theme_override_font_sizes/font_size = 50
+text = "Cancel"
+
+[node name="RoundCounter" type="Label" parent="Camera2D"]
+offset_left = -410.0
+offset_top = -519.0
+offset_right = -308.0
+offset_bottom = -482.0
+theme_override_font_sizes/font_size = 24
+text = "Round: 1"
+
+[node name="TurnCounter" type="Label" parent="Camera2D"]
+visible = false
+offset_left = -545.0
+offset_top = -518.0
+offset_right = -491.0
+offset_bottom = -481.0
+theme_override_font_sizes/font_size = 24
+text = "Turn: 1"
+
+[node name="States" type="Node2D" parent="."]
+
+[node name="Draft" type="Node2D" parent="States"]
+
+[node name="Setup" type="Node2D" parent="States"]
+
+[node name="Management" type="Node2D" parent="States"]
+
+[node name="Worker" type="Node2D" parent="States"]
+
+[node name="HoldingWorker" type="Node2D" parent="States"]
+
+[node name="Shift" type="Node2D" parent="States"]
+
+[node name="HoldingClient" type="Node2D" parent="States"]
+
+[node name="RosterSection" type="Node2D" parent="."]
+
+[node name="Position1" type="Node2D" parent="RosterSection"]
+position = Vector2(-489, 525)
+
+[node name="Position2" type="Node2D" parent="RosterSection"]
+position = Vector2(-238, 525)
+
+[node name="Position3" type="Node2D" parent="RosterSection"]
+position = Vector2(13, 525)
+
+[node name="Position4" type="Node2D" parent="RosterSection"]
+position = Vector2(263, 525)
+
+[node name="Position5" type="Node2D" parent="RosterSection"]
+position = Vector2(516, 525)
+
+[node name="Position6" type="Node2D" parent="RosterSection"]
+position = Vector2(-489, 886)
+
+[node name="Position7" type="Node2D" parent="RosterSection"]
+position = Vector2(-238, 886)
+
+[node name="Position8" type="Node2D" parent="RosterSection"]
+position = Vector2(13, 886)
+
+[node name="Position9" type="Node2D" parent="RosterSection"]
+position = Vector2(263, 886)
+
+[node name="Position10" type="Node2D" parent="RosterSection"]
+position = Vector2(516, 886)
+
+[node name="Position11" type="Node2D" parent="RosterSection"]
+position = Vector2(-489, 1201)
+
+[node name="Position12" type="Node2D" parent="RosterSection"]
+position = Vector2(-238, 1201)
+
+[node name="Position13" type="Node2D" parent="RosterSection"]
+position = Vector2(13, 1201)
+
+[node name="Position14" type="Node2D" parent="RosterSection"]
+position = Vector2(263, 1201)
+
+[node name="Position15" type="Node2D" parent="RosterSection"]
+position = Vector2(516, 1201)
+
+[node name="WorkerPlaySlots" type="Node2D" parent="."]
+
+[node name="Slot1" parent="WorkerPlaySlots" instance=ExtResource("2_ugx0h")]
+position = Vector2(-631, 169)
+scale = Vector2(1.5, 1.5)
+
+[node name="Slot2" parent="WorkerPlaySlots" instance=ExtResource("2_ugx0h")]
+position = Vector2(-317, 169)
+scale = Vector2(1.5, 1.5)
+
+[node name="Slot3" parent="WorkerPlaySlots" instance=ExtResource("2_ugx0h")]
+position = Vector2(0, 169)
+scale = Vector2(1.5, 1.5)
+
+[node name="Slot4" parent="WorkerPlaySlots" instance=ExtResource("2_ugx0h")]
+position = Vector2(317, 169)
+scale = Vector2(1.5, 1.5)
+
+[node name="Slot5" parent="WorkerPlaySlots" instance=ExtResource("2_ugx0h")]
+position = Vector2(629, 169)
+scale = Vector2(1.5, 1.5)
+
+[node name="TaskDrawDeck" parent="." instance=ExtResource("3_gwbfn")]
+position = Vector2(500, -400)
+scale = Vector2(1.5, 1.5)
+
+[node name="Count" type="Label" parent="TaskDrawDeck"]
+offset_left = -0.666656
+offset_top = -25.3333
+offset_right = 39.3333
+offset_bottom = 0.666687
+text = "0"
+
+[node name="PoorDiscardPile" parent="." instance=ExtResource("3_gwbfn")]
+position = Vector2(-800, -400)
+scale = Vector2(1.5, 1.5)
+
+[node name="GoodDiscardPile" parent="." instance=ExtResource("3_gwbfn")]
+position = Vector2(-400, -400)
+scale = Vector2(1.5, 1.5)
+
+[node name="GreatDiscardPile" parent="." instance=ExtResource("3_gwbfn")]
+position = Vector2(6.10352e-05, -400)
+scale = Vector2(1.5, 1.5)
+
+[node name="RosterButton" type="Area2D" parent="."]
+position = Vector2(0, 476)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RosterButton"]
+position = Vector2(13, 19)
+shape = SubResource("RectangleShape2D_78syh")
+
+[node name="ReturnButton" type="Area2D" parent="."]
+visible = false
+position = Vector2(-844, 180)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReturnButton"]
+position = Vector2(-68, 2)
+shape = SubResource("RectangleShape2D_vw0g8")
+disabled = true
+
+[node name="Label" type="Label" parent="ReturnButton"]
+offset_left = -45.0
+offset_top = 54.0
+offset_right = 5.0
+offset_bottom = 80.0
+text = "return"
+
+[node name="HireWorkerButton" type="Button" parent="."]
+offset_left = 629.0
+offset_top = -103.0
+offset_right = 833.0
+offset_bottom = -54.0
+theme_override_font_sizes/font_size = 24
+text = "Hire Worker: $60"
+
+[node name="PreviewTask" type="Node2D" parent="."]
+position = Vector2(-154, -346)
+
+[node name="Hand" type="Node2D" parent="."]
+position = Vector2(0, 612)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_jxmks")
+
+[connection signal="pressed" from="Camera2D/EndManagement" to="." method="enter_shift_overview_state"]
+[connection signal="pressed" from="Camera2D/EndShift" to="." method="enter_management_overview_state"]
+[connection signal="pressed" from="Camera2D/EndTurn" to="." method="enter_shift_overview_state"]
+[connection signal="pressed" from="Camera2D/EndDraft" to="." method="confirm_draft"]
+[connection signal="pressed" from="Camera2D/CancelDraft" to="." method="cancel_draft"]
+[connection signal="button_pushed" from="TaskDrawDeck" to="." method="_on_task_draw_deck_button_pushed"]
+[connection signal="button_pushed" from="PoorDiscardPile" to="." method="move_to_poor_discard"]
+[connection signal="input_event" from="RosterButton" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="RosterButton" to="." method="lift_hand"]
+[connection signal="mouse_exited" from="RosterButton" to="." method="drop_hand"]
+[connection signal="input_event" from="ReturnButton" to="." method="_on_area_2d_2_input_event"]
+[connection signal="pressed" from="HireWorkerButton" to="." method="_on_hire_button_pressed"]

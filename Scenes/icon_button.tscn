@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://b41yu27wmglap"]
+
+[ext_resource type="Script" path="res://Scripts/icon_button.gd" id="1_0fxs0"]
+[ext_resource type="Texture2D" uid="uid://c2oy6ox1ukog8" path="res://Assets/frame.png" id="2_n5xcj"]
+[ext_resource type="Texture2D" uid="uid://b5anmd3k3fuui" path="res://Assets/goldring.png" id="3_ouhcr"]
+[ext_resource type="Texture2D" uid="uid://cw373mc2nyf0t" path="res://Assets/redring.png" id="4_0e655"]
+
+[node name="TextureButton" type="TextureButton"]
+offset_right = 164.0
+offset_bottom = 176.0
+button_mask = 3
+script = ExtResource("1_0fxs0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(87, 87)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("2_n5xcj")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(87, 88)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("3_ouhcr")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(87, 88)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("4_0e655")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://b33xjpvgbjl08"]
+
+[ext_resource type="Script" path="res://Scenes/network_lobby.gd" id="1_yetq7"]
+
+[node name="Root" type="Node2D"]
+script = ExtResource("1_yetq7")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/player.tscn", "res://Scenes/board.tscn")
+spawn_path = NodePath("../Network")
+
+[node name="Network" type="Node" parent="."]
+
+[node name="UI" type="VBoxContainer" parent="."]
+offset_right = 116.0
+offset_bottom = 136.0
+
+[node name="IPField" type="LineEdit" parent="UI"]
+layout_mode = 2
+placeholder_text = "localhost"
+alignment = 2
+
+[node name="PortField" type="LineEdit" parent="UI"]
+layout_mode = 2
+placeholder_text = "58008"
+alignment = 2
+
+[node name="Connect" type="Button" parent="UI"]
+layout_mode = 2
+text = "Connect"
+
+[node name="Host" type="Button" parent="UI"]
+layout_mode = 2
+text = "Host"
+
+[node name="SinglePlayer" type="Button" parent="UI"]
+layout_mode = 2
+text = "SinglePlayer"
+
+[node name="TablePosition1" type="Node2D" parent="."]
+position = Vector2(-2, 1475)
+
+[node name="TablePosition2" type="Node2D" parent="."]
+position = Vector2(1922, 1475)
+
+[node name="TablePosition3" type="Node2D" parent="."]
+position = Vector2(-2, -339)
+rotation = 3.14159
+
+[node name="TablePosition4" type="Node2D" parent="."]
+position = Vector2(1922, -339)
+rotation = 3.14159
+
+[connection signal="pressed" from="UI/Connect" to="." method="connect_to_server"]
+[connection signal="pressed" from="UI/Host" to="." method="host_server"]
+[connection signal="pressed" from="UI/SinglePlayer" to="." method="_on_single_player_pressed"]

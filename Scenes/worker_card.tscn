@@ -1,0 +1,165 @@
+[gd_scene load_steps=12 format=3 uid="uid://dxs1dlcnwxx5g"]
+
+[ext_resource type="Script" path="res://Scripts/worker.gd" id="1_bry7w"]
+[ext_resource type="Texture2D" uid="uid://b5lwogcrjwpfj" path="res://Assets/card.png" id="2_taqnr"]
+[ext_resource type="Texture2D" uid="uid://b4qqaaqnfnlft" path="res://Assets/icons.png" id="3_pj1i6"]
+[ext_resource type="Texture2D" uid="uid://c2oy6ox1ukog8" path="res://Assets/frame.png" id="4_rce5w"]
+[ext_resource type="Texture2D" uid="uid://b4lont873b556" path="res://Assets/super.png" id="5_a2bm7"]
+
+[sub_resource type="Curve" id="Curve_7kl8o"]
+min_value = -1.0
+_data = [Vector2(0, -1), 0.0, 2.0, 0, 1, Vector2(1, 1), 2.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_b6tcq"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_scedo"]
+min_value = -1.0
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_xciys"]
+font_size = 25
+shadow_size = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_88ebh"]
+font_size = 24
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_awcy0"]
+size = Vector2(250, 350)
+
+[node name="Card" type="Node2D"]
+position = Vector2(125, 175)
+script = ExtResource("1_bry7w")
+spread_curve = SubResource("Curve_7kl8o")
+height_curve = SubResource("Curve_b6tcq")
+rotation_curve = SubResource("Curve_scedo")
+hand_width = 300.0
+hand_height = 80.0
+hand_rotation = 0.2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_taqnr")
+
+[node name="Title" type="Label" parent="Sprite2D"]
+modulate = Color(0, 0, 0, 1)
+texture_filter = 1
+offset_left = -117.0
+offset_top = -167.0
+offset_right = 117.0
+offset_bottom = -129.0
+text = "Card Title"
+label_settings = SubResource("LabelSettings_xciys")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Capacity" type="Label" parent="Sprite2D"]
+modulate = Color(0, 0, 0, 1)
+texture_filter = 1
+offset_left = 77.0
+offset_top = 126.0
+offset_right = 114.0
+offset_bottom = 163.0
+text = "99"
+label_settings = SubResource("LabelSettings_88ebh")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Bonus1" type="Node2D" parent="Sprite2D"]
+
+[node name="Icon1" type="Sprite2D" parent="Sprite2D/Bonus1"]
+visible = false
+position = Vector2(-98, 148)
+texture = ExtResource("3_pj1i6")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="frame1" type="Sprite2D" parent="Sprite2D/Bonus1"]
+position = Vector2(-99, 145)
+texture = ExtResource("4_rce5w")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="super1" type="Sprite2D" parent="Sprite2D/Bonus1"]
+visible = false
+position = Vector2(-98, 145)
+texture = ExtResource("5_a2bm7")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Bonus2" type="Node2D" parent="Sprite2D"]
+
+[node name="Icon2" type="Sprite2D" parent="Sprite2D/Bonus2"]
+visible = false
+position = Vector2(-53, 148)
+texture = ExtResource("3_pj1i6")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="frame2" type="Sprite2D" parent="Sprite2D/Bonus2"]
+position = Vector2(-52, 145)
+texture = ExtResource("4_rce5w")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="super2" type="Sprite2D" parent="Sprite2D/Bonus2"]
+visible = false
+position = Vector2(-52, 145)
+texture = ExtResource("5_a2bm7")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Bonus3" type="Node2D" parent="Sprite2D"]
+
+[node name="Icon3" type="Sprite2D" parent="Sprite2D/Bonus3"]
+visible = false
+position = Vector2(-7, 148)
+texture = ExtResource("3_pj1i6")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="frame3" type="Sprite2D" parent="Sprite2D/Bonus3"]
+position = Vector2(-6, 145)
+texture = ExtResource("4_rce5w")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="super3" type="Sprite2D" parent="Sprite2D/Bonus3"]
+visible = false
+position = Vector2(-6, 145)
+texture = ExtResource("5_a2bm7")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Bonus4" type="Node2D" parent="Sprite2D"]
+
+[node name="Icon4" type="Sprite2D" parent="Sprite2D/Bonus4"]
+visible = false
+position = Vector2(39, 148)
+texture = ExtResource("3_pj1i6")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="frame4" type="Sprite2D" parent="Sprite2D/Bonus4"]
+position = Vector2(40, 145)
+texture = ExtResource("4_rce5w")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="super4" type="Sprite2D" parent="Sprite2D/Bonus4"]
+visible = false
+position = Vector2(40, 145)
+texture = ExtResource("5_a2bm7")
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Area2D" type="Area2D" parent="." groups=["Card"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_awcy0")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 127.0
+offset_top = 153.0
+offset_right = 167.0
+offset_bottom = 179.0
+text = "0"
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

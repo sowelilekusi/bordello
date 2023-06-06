@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=3 uid="uid://cohkyvbxr2gnh"]
+
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_cg0id"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cg0id")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 462.0
+offset_top = 67.0
+offset_right = 1395.0
+offset_bottom = 246.0
+theme_override_font_sizes/font_size = 129
+text = "Lexi's Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Play Game" type="Button" parent="."]
+layout_mode = 0
+offset_left = 740.0
+offset_top = 297.0
+offset_right = 1094.0
+offset_bottom = 460.0
+theme_override_font_sizes/font_size = 40
+text = "Play"
+
+[node name="Worker Deck" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 740.0
+offset_top = 569.0
+offset_right = 1094.0
+offset_bottom = 732.0
+theme_override_font_sizes/font_size = 40
+text = "worker deck
+dev tool"
+
+[node name="Task Deck" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 740.0
+offset_top = 745.0
+offset_right = 1094.0
+offset_bottom = 908.0
+theme_override_font_sizes/font_size = 40
+text = "task deck
+dev tool"
+
+[node name="CheckButton" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 1009.0
+offset_top = 491.0
+offset_right = 1053.0
+offset_bottom = 515.0
+scale = Vector2(2, 2)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 738.0
+offset_top = 482.0
+offset_right = 1002.0
+offset_bottom = 540.0
+theme_override_font_sizes/font_size = 35
+text = "Show dev tools"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Play Game" to="." method="_on_play_game_pressed"]
+[connection signal="pressed" from="Worker Deck" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Task Deck" to="." method="_on_button_2_pressed"]
+[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]
