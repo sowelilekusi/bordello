@@ -150,7 +150,7 @@ position = Vector2(40, 145)
 texture = ExtResource("5_a2bm7")
 region_rect = Rect2(0, 0, 32, 32)
 
-[node name="Area2D" type="Area2D" parent="." groups=["Card"]]
+[node name="Area2D" type="Area2D" parent="."]
 position = Vector2(125, 175)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]

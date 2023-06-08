@@ -10,7 +10,7 @@ hand_position = NodePath("Node2D")
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.501, 0.501)
+zoom = Vector2(0.463, 0.463)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -21,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme = ExtResource("2_ja0q8")
 
 [node name="Cash" type="Label" parent="CanvasLayer/UI"]
@@ -50,6 +51,23 @@ layout_mode = 2
 offset_top = 312.0
 offset_right = 1152.0
 offset_bottom = 335.0
+
+[node name="Confirm" type="Button" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = 257.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Confirm"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI"]
 layout_mode = 1
@@ -89,5 +107,6 @@ size_flags_vertical = 3
 [node name="LineEdit" type="LineEdit" parent="CanvasLayer/UI/VBoxContainer"]
 layout_mode = 2
 
+[connection signal="pressed" from="CanvasLayer/UI/Confirm" to="." method="_on_confirm_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/LobbyReadyButton" to="." method="_on_lobby_ready_button_pressed"]
 [connection signal="text_submitted" from="CanvasLayer/UI/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

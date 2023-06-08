@@ -99,6 +99,8 @@ func add_player(id: int, username: String, type: PlayerType) -> void:
 			networked_controllers.append(controller)
 			controller.ready_button_pressed.connect(ready_player)
 			controller.chat_message_submitted.connect(message)
+			controller.workers_discarded.connect(discard_workers)
+			controller.workers_kept.connect(board.add_to_roster)
 			var player_info = {}
 			player_info["id"] = id
 			player_info["username"] = username
@@ -166,3 +168,10 @@ func draft_workers(player, draw_amount, pick_amount):
 	for x in players:
 		if x.player_info["username"] == player:
 			x.draft(cards, pick_amount)
+
+
+@rpc("call_local")
+func discard_workers(node_paths):
+	for path in node_paths:
+		var card = get_node(path)
+		worker_discard.place(card)

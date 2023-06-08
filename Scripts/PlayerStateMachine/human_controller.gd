@@ -22,8 +22,10 @@ func ready_self():
 	ready_button_pressed.emit(player_info["id"])
 
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func update_ready_label(readied_players, total_players):
+	if readied_players == total_players:
+		ready_label.visible = false
 	ready_label.text = str(readied_players) + "/" + str(total_players)
 
 
@@ -40,3 +42,16 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 	var msg = "[" + player_info["username"] + "] " + new_text + "\n"
 	$CanvasLayer/UI/VBoxContainer/LineEdit.text = ""
 	chat_message_submitted.emit(msg)
+
+
+func select_card(card):
+	super(card)
+	if draft_picked.size() == draft_pick_amount:
+		$CanvasLayer/UI/Confirm.visible = true
+	else:
+		$CanvasLayer/UI/Confirm.visible = false
+
+
+func _on_confirm_pressed() -> void:
+	$CanvasLayer/UI/Confirm.visible = false
+	rpc("confirm_draft")
