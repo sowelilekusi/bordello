@@ -21,8 +21,9 @@ const CLIENT_DECK_SAVE_PATH = "user://client_deck.json"
 @export var seat4: Node2D
 
 var networked_controllers: Array[HumanController] = []
-var players = []
-var readied_players = []
+var current_player := 0
+var players: Array[PlayerController] = []
+var readied_players: Array[int] = []
 
 var _worker_scene = preload("res://Scenes/worker_card.tscn")
 var _client_scene = preload("res://Scenes/client_card.tscn")
@@ -96,17 +97,30 @@ func add_player(id: int, username: String, type: PlayerType) -> void:
 		PlayerType.HUMAN:
 			controller = _human_scene.instantiate()
 			networked_controllers.append(controller)
+			controller.ready_button_pressed.connect(ready_player)
+			controller.chat_message_submitted.connect(message)
+			var player_info = {}
+			player_info["id"] = id
+			player_info["username"] = username
+			controller.player_info = player_info
 		PlayerType.BOT:
 			controller = _bot_scene.instantiate()
 	controller.name = str(id)
 	controller.set_multiplayer_authority(id)
-	controller.own_id = id
-	controller.game = self as Game
-	controller.board = board as PlayerBoard
 	board.add_child(controller)
-	players.append(id)
+	players.append(controller)
 	for player in networked_controllers:
-		player.rpc("update_ready_label")
+		player.rpc("update_ready_label", readied_players.size(), players.size())
+
+
+@rpc("call_local", "any_peer") #called from message() by player signals
+func relay_chat_message(msg):
+	for player in networked_controllers:
+		player.add_chat_line(msg)
+
+
+func message(msg):
+	rpc("relay_chat_message", msg)
 
 
 func ready_player(id):
@@ -115,8 +129,40 @@ func ready_player(id):
 	if readied_players.size() == players.size():
 		start_game()
 	for player in networked_controllers:
-		player.rpc("update_ready_label")
+		player.rpc("update_ready_label", readied_players.size(), players.size())
 
 
 func start_game():
-	print("Game started!")
+	#Only the host should shuffle the decks
+	if is_multiplayer_authority():
+		randomize()
+		var deck_order = []
+		for card in worker_deck.cards:
+			deck_order.append(card.get_path())
+		rpc("send_worker_order", deck_order)
+		deck_order = []
+		for card in client_deck.cards:
+			deck_order.append(card.get_path())
+		rpc("send_client_order", deck_order)
+		for player in players:
+			rpc("draft_workers", player.player_info["username"], 4, 2)
+
+
+@rpc
+func send_worker_order(node_paths):
+	worker_deck.order(node_paths)
+
+
+@rpc
+func send_client_order(node_paths):
+	client_deck.order(node_paths)
+
+
+@rpc("call_local")
+func draft_workers(player, draw_amount, pick_amount):
+	var cards = []
+	for x in draw_amount:
+		cards.append(worker_deck.draw_card())
+	for x in players:
+		if x.player_info["username"] == player:
+			x.draft(cards, pick_amount)

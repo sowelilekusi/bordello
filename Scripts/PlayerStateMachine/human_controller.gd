@@ -1,25 +1,42 @@
 class_name HumanController
 extends PlayerController
 
+signal ready_button_pressed(int)
+signal chat_message_submitted(String)
+
+@onready var ready_button = $CanvasLayer/UI/HBoxContainer/LobbyReadyButton
+@onready var ready_label = $CanvasLayer/UI/HBoxContainer/LobbyReadyLabel
+@onready var canvas = $CanvasLayer
+@onready var chat_box = $CanvasLayer/UI/VBoxContainer/RichTextLabel
+
 
 func _ready() -> void:
 	if not is_multiplayer_authority():
+		canvas.visible = false
 		return
 	$Camera2D.make_current()
-	$UI.visible = true
 
 
 @rpc("call_local")
-func ready_player():
-	game.ready_player(own_id)
+func ready_self():
+	ready_button_pressed.emit(player_info["id"])
 
 
 @rpc("any_peer")
-func update_ready_label():
-	$UI/LobbyReadyLabel.text = str(game.readied_players.size()) + "/" + str(game.players.size())
+func update_ready_label(readied_players, total_players):
+	ready_label.text = str(readied_players) + "/" + str(total_players)
 
 
 func _on_lobby_ready_button_pressed() -> void:
-	rpc("ready_player")
-	$UI/LobbyReadyButton.visible = false
-	update_ready_label()
+	rpc("ready_self")
+	ready_button.visible = false
+
+
+func add_chat_line(line: String) -> void:
+	chat_box.text += line
+
+
+func _on_line_edit_text_submitted(new_text: String) -> void:
+	var msg = "[" + player_info["username"] + "] " + new_text + "\n"
+	$CanvasLayer/UI/VBoxContainer/LineEdit.text = ""
+	chat_message_submitted.emit(msg)

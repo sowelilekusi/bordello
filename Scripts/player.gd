@@ -168,22 +168,6 @@ func select_slot(slot):
 	selected_worker.slide_to_position(slot.position.x, slot.position.y, 0.0, 0.3)
 	selected_worker = null
 
-#Shift Phase
-	#1. Swap 1 time token on each worker over to the stress side
-	#2. Pick up the next client card in the deck, and either assign it to 
-	#   a worker or place it in the no service pile
-	#3. If a worker both has no client, and at least one stress token, remove
-	#   a stress token
-
-#Management Phase
-	#Market Research
-		#Look at the 10 clients, and place them back in the same order
-	#Targeted Advertising
-		#Search through the client discard deck, and add all clients
-		#with one extra type to your shift deck
-	#Roster Worker
-		#Add 1 worker from your hand into the next open slot on your board
-
 
 func _on_area_2d_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed:

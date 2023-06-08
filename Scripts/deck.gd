@@ -36,7 +36,7 @@ func _on_area_2d_mouse_exited() -> void:
 	mouse_exited.emit()
 
 
-func draw() -> Card:
+func draw_card() -> Card:
 	return cards.pop_back()
 
 
@@ -51,3 +51,9 @@ func place(card: Card) -> void:
 
 func shuffle() -> void:
 	cards.shuffle()
+
+
+func order(node_paths) -> void:
+	cards = []
+	for path in node_paths:
+		cards.append(get_node(path))

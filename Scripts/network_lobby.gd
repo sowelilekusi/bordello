@@ -15,7 +15,6 @@ var players_connected = 0
 
 func _ready() -> void:
 	game = game_scene.instantiate() as Game
-	
 
 
 func host_server() -> void:
@@ -28,12 +27,10 @@ func host_server() -> void:
 	
 	player_info[1] = $UI/Username.text
 	add_player(1, player_info[1])
-	game.get_node("LobbyCamera/LineEdit").text_submitted.connect(text_message)
 	
 	multiplayer.peer_connected.connect(
 		func(new_peer_id):
 			rpc_id(new_peer_id, "add_previous_players", connected_players)
-			#rpc("add_new_player", new_peer_id)
 	)
 
 
@@ -48,6 +45,7 @@ func connect_to_server() -> void:
 	add_child(game)
 	player_info[multiplayer.get_unique_id()] = $UI/Username.text
 
+
 func add_player(peer_id, username):
 	connected_players[peer_id] = username
 	game.add_player(peer_id, username, game.PlayerType.HUMAN)
@@ -58,15 +56,11 @@ func add_new_player(peer_id, username):
 	add_player(peer_id, username)
 
 
-func text_message(new_text):
-	game.get_node("LobbyCamera/RichTextLabel").rpc("add_line", player_info[multiplayer.get_unique_id()], new_text)
-	game.get_node("LobbyCamera/LineEdit").text = ""
-
-
 @rpc
 func add_previous_players(players):
 	for key in players:
+		if players[key] == player_info[multiplayer.get_unique_id()]:
+			player_info[multiplayer.get_unique_id()] += "_"
 		add_player(key, players[key])
 		rpc_id(key, "add_new_player", multiplayer.get_unique_id(), player_info[multiplayer.get_unique_id()])
 	add_player(multiplayer.get_unique_id(), player_info[multiplayer.get_unique_id()])
-	game.get_node("LobbyCamera/LineEdit").text_submitted.connect(text_message)
