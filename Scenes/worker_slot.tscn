@@ -19,7 +19,6 @@ texture = ExtResource("1_fxq0t")
 position = Vector2(-225, -175)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Worker"]
-visible = false
 position = Vector2(125, 175)
 shape = SubResource("RectangleShape2D_1gv0f")
 
@@ -27,6 +26,8 @@ shape = SubResource("RectangleShape2D_1gv0f")
 position = Vector2(-125, -175)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Client"]
-visible = false
 position = Vector2(175, 125)
 shape = SubResource("RectangleShape2D_27hn2")
+
+[connection signal="input_event" from="Worker" to="." method="_on_area2d_input_event"]
+[connection signal="input_event" from="Client" to="." method="_on_area2d_input_event"]

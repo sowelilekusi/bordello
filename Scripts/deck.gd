@@ -37,6 +37,8 @@ func _on_area_2d_mouse_exited() -> void:
 
 
 func draw_card() -> Card:
+	if cards.size() == 0:
+		return null
 	return cards.pop_back()
 
 

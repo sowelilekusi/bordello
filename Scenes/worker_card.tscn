@@ -60,9 +60,9 @@ uppercase = true
 [node name="Capacity" type="Label" parent="Sprite2D"]
 modulate = Color(0, 0, 0, 1)
 texture_filter = 1
-offset_left = 77.0
+offset_left = 78.0
 offset_top = 126.0
-offset_right = 114.0
+offset_right = 115.0
 offset_bottom = 163.0
 text = "99"
 label_settings = SubResource("LabelSettings_88ebh")
@@ -71,6 +71,7 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="Bonus1" type="Node2D" parent="Sprite2D"]
+position = Vector2(-2, 1)
 
 [node name="Icon1" type="Sprite2D" parent="Sprite2D/Bonus1"]
 visible = false
@@ -80,6 +81,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="frame1" type="Sprite2D" parent="Sprite2D/Bonus1"]
+visible = false
 position = Vector2(-99, 145)
 texture = ExtResource("4_rce5w")
 region_rect = Rect2(0, 0, 32, 32)
@@ -91,6 +93,7 @@ texture = ExtResource("5_a2bm7")
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="Bonus2" type="Node2D" parent="Sprite2D"]
+position = Vector2(1, 1)
 
 [node name="Icon2" type="Sprite2D" parent="Sprite2D/Bonus2"]
 visible = false
@@ -100,6 +103,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="frame2" type="Sprite2D" parent="Sprite2D/Bonus2"]
+visible = false
 position = Vector2(-52, 145)
 texture = ExtResource("4_rce5w")
 region_rect = Rect2(0, 0, 32, 32)
@@ -111,6 +115,7 @@ texture = ExtResource("5_a2bm7")
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="Bonus3" type="Node2D" parent="Sprite2D"]
+position = Vector2(3, 1)
 
 [node name="Icon3" type="Sprite2D" parent="Sprite2D/Bonus3"]
 visible = false
@@ -120,6 +125,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="frame3" type="Sprite2D" parent="Sprite2D/Bonus3"]
+visible = false
 position = Vector2(-6, 145)
 texture = ExtResource("4_rce5w")
 region_rect = Rect2(0, 0, 32, 32)
@@ -131,6 +137,7 @@ texture = ExtResource("5_a2bm7")
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="Bonus4" type="Node2D" parent="Sprite2D"]
+position = Vector2(5, 1)
 
 [node name="Icon4" type="Sprite2D" parent="Sprite2D/Bonus4"]
 visible = false
@@ -140,6 +147,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)
 
 [node name="frame4" type="Sprite2D" parent="Sprite2D/Bonus4"]
+visible = false
 position = Vector2(40, 145)
 texture = ExtResource("4_rce5w")
 region_rect = Rect2(0, 0, 32, 32)

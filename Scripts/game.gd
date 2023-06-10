@@ -23,7 +23,10 @@ const CLIENT_DECK_SAVE_PATH = "user://client_deck.json"
 var networked_controllers: Array[HumanController] = []
 var current_player := 0
 var players: Array[PlayerController] = []
+var player_boards: Array[PlayerBoard] = []
 var readied_players: Array[int] = []
+var round_number := 0
+var turn_number := 0
 
 var _worker_scene = preload("res://Scenes/worker_card.tscn")
 var _client_scene = preload("res://Scenes/client_card.tscn")
@@ -75,7 +78,7 @@ func _load_clients():
 	client_deck.shuffle()
 
 
-@rpc #Called by the network lobby code
+@rpc("reliable") #Called by the network lobby code
 func add_player(id: int, username: String, type: PlayerType) -> void:
 	if players.size() > 4:
 		return
@@ -105,17 +108,26 @@ func add_player(id: int, username: String, type: PlayerType) -> void:
 			player_info["id"] = id
 			player_info["username"] = username
 			controller.player_info = player_info
+			board.player_info = player_info
 		PlayerType.BOT:
 			controller = _bot_scene.instantiate()
 	controller.name = str(id)
 	controller.set_multiplayer_authority(id)
 	board.add_child(controller)
+	controller.client_position = board.position
+	controller.board = board
+	board.slots[0].clicked.connect(controller.select_workspace)
+	board.slots[1].clicked.connect(controller.select_workspace)
+	board.slots[2].clicked.connect(controller.select_workspace)
+	board.slots[3].clicked.connect(controller.select_workspace)
+	board.name = "board " + str(player_boards.size())
+	player_boards.append(board)
 	players.append(controller)
 	for player in networked_controllers:
 		player.rpc("update_ready_label", readied_players.size(), players.size())
 
 
-@rpc("call_local", "any_peer") #called from message() by player signals
+@rpc("call_local", "any_peer", "reliable") #called from message() by player signals
 func relay_chat_message(msg):
 	for player in networked_controllers:
 		player.add_chat_line(msg)
@@ -128,14 +140,20 @@ func message(msg):
 func ready_player(id):
 	if not readied_players.has(id):
 		readied_players.append(id)
-	if readied_players.size() == players.size():
-		start_game()
 	for player in networked_controllers:
 		player.rpc("update_ready_label", readied_players.size(), players.size())
+	if readied_players.size() == players.size() and is_multiplayer_authority():
+		if round_number == 0:
+			rpc("start_game")
+		else:
+			rpc("start_round")
 
 
+@rpc("call_local", "reliable")
 func start_game():
 	#Only the host should shuffle the decks
+	readied_players = []
+	round_number += 1
 	if is_multiplayer_authority():
 		randomize()
 		var deck_order = []
@@ -148,19 +166,40 @@ func start_game():
 		rpc("send_client_order", deck_order)
 		for player in players:
 			rpc("draft_workers", player.player_info["username"], 4, 2)
+			rpc("draft_clients", player.player_info["username"])
 
 
-@rpc
+@rpc("call_local", "reliable")
+func start_round():
+	readied_players = []
+	round_number += 1
+	turn_number = 0
+	if is_multiplayer_authority():
+		rpc("start_turn")
+
+
+@rpc("call_local", "reliable")
+func start_turn():
+	turn_number += 1
+	for x in players.size():
+		#players[x].rpc("start_turn")
+		players[x].start_turn()
+		await players[x].turn_finished
+	if is_multiplayer_authority():
+		rpc("start_turn")
+
+
+@rpc("reliable")
 func send_worker_order(node_paths):
 	worker_deck.order(node_paths)
 
 
-@rpc
+@rpc("reliable")
 func send_client_order(node_paths):
 	client_deck.order(node_paths)
 
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func draft_workers(player, draw_amount, pick_amount):
 	var cards = []
 	for x in draw_amount:
@@ -170,8 +209,24 @@ func draft_workers(player, draw_amount, pick_amount):
 			x.draft(cards, pick_amount)
 
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func discard_workers(node_paths):
 	for path in node_paths:
 		var card = get_node(path)
 		worker_discard.place(card)
+
+
+@rpc("call_local", "reliable")
+func draft_clients(player):
+	var cards = []
+	for x in 2 + (2 * round_number):
+		cards.append(client_deck.draw_card())
+	for x in player_boards:
+		if x.player_info["username"] == player:
+			for card in cards:
+				x.shift_deck.place(card)
+
+
+@rpc("call_local", "reliable")
+func discard_clients(_node_paths):
+	pass

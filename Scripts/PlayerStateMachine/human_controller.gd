@@ -8,6 +8,7 @@ signal chat_message_submitted(String)
 @onready var ready_label = $CanvasLayer/UI/HBoxContainer/LobbyReadyLabel
 @onready var canvas = $CanvasLayer
 @onready var chat_box = $CanvasLayer/UI/VBoxContainer/RichTextLabel
+var game_started = false
 
 
 func _ready() -> void:
@@ -17,12 +18,12 @@ func _ready() -> void:
 	$Camera2D.make_current()
 
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func ready_self():
 	ready_button_pressed.emit(player_info["id"])
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func update_ready_label(readied_players, total_players):
 	if readied_players == total_players:
 		ready_label.visible = false
@@ -32,6 +33,7 @@ func update_ready_label(readied_players, total_players):
 func _on_lobby_ready_button_pressed() -> void:
 	rpc("ready_self")
 	ready_button.visible = false
+	rpc("end_turn")
 
 
 func add_chat_line(line: String) -> void:
@@ -55,3 +57,18 @@ func select_card(card):
 func _on_confirm_pressed() -> void:
 	$CanvasLayer/UI/Confirm.visible = false
 	rpc("confirm_draft")
+
+
+func start_turn():
+	super()
+
+
+func select_workspace(workspace):
+	super(workspace)
+	ready_button.visible = true
+
+
+@rpc("call_local", "reliable")
+func confirm_draft():
+	super()
+	ready_button.visible = true

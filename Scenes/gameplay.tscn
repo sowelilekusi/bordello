@@ -2,40 +2,63 @@
 
 [ext_resource type="Script" path="res://Scripts/network_lobby.gd" id="1_dsni2"]
 
-[node name="Root" type="Node2D"]
+[node name="Root" type="Node2D" node_paths=PackedStringArray("username_field", "IP_field", "Port_field")]
 script = ExtResource("1_dsni2")
+username_field = NodePath("CanvasLayer/Control/UI/Username")
+IP_field = NodePath("CanvasLayer/Control/UI/IPField")
+Port_field = NodePath("CanvasLayer/Control/UI/PortField")
 
-[node name="UI" type="VBoxContainer" parent="."]
-offset_right = 116.0
-offset_bottom = 136.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Username" type="LineEdit" parent="UI"]
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UI" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -125.0
+offset_right = 150.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Username" type="LineEdit" parent="CanvasLayer/Control/UI"]
 layout_mode = 2
 placeholder_text = "username"
 alignment = 2
 
-[node name="IPField" type="LineEdit" parent="UI"]
+[node name="IPField" type="LineEdit" parent="CanvasLayer/Control/UI"]
 layout_mode = 2
 placeholder_text = "localhost"
 alignment = 2
 
-[node name="PortField" type="LineEdit" parent="UI"]
+[node name="PortField" type="LineEdit" parent="CanvasLayer/Control/UI"]
 layout_mode = 2
 placeholder_text = "58008"
 alignment = 2
 
-[node name="Connect" type="Button" parent="UI"]
+[node name="Connect" type="Button" parent="CanvasLayer/Control/UI"]
 layout_mode = 2
 text = "Connect"
 
-[node name="Host" type="Button" parent="UI"]
+[node name="Host" type="Button" parent="CanvasLayer/Control/UI"]
 layout_mode = 2
 text = "Host"
 
-[node name="SinglePlayer" type="Button" parent="UI"]
+[node name="SinglePlayer" type="Button" parent="CanvasLayer/Control/UI"]
 layout_mode = 2
 text = "SinglePlayer"
 
-[connection signal="pressed" from="UI/Connect" to="." method="connect_to_server"]
-[connection signal="pressed" from="UI/Host" to="." method="host_server"]
-[connection signal="pressed" from="UI/SinglePlayer" to="." method="_on_single_player_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/UI/Connect" to="." method="connect_to_server"]
+[connection signal="pressed" from="CanvasLayer/Control/UI/Host" to="." method="host_server"]
+[connection signal="pressed" from="CanvasLayer/Control/UI/SinglePlayer" to="." method="_on_single_player_pressed"]

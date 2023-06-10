@@ -5,26 +5,34 @@
 [ext_resource type="PackedScene" uid="uid://y2i3u6n1oowh" path="res://Scenes/deck.tscn" id="3_ypq4b"]
 [ext_resource type="PackedScene" uid="uid://baoec8cqmedf6" path="res://Scenes/worker_slot.tscn" id="4_o73ea"]
 
-[node name="PlayerBoard" type="Node2D"]
+[node name="PlayerBoard" type="Node2D" node_paths=PackedStringArray("poor_deck", "good_deck", "great_deck", "shift_deck", "slot1", "slot2", "slot3", "slot4")]
 script = ExtResource("1_80bvu")
+poor_deck = NodePath("PoorDeck")
+good_deck = NodePath("GoodDeck")
+great_deck = NodePath("GreatDeck")
+shift_deck = NodePath("ShiftDeck")
+slot1 = NodePath("Slot1")
+slot2 = NodePath("Slot2")
+slot3 = NodePath("Slot3")
+slot4 = NodePath("Slot4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_rx76r")
 
-[node name="ShiftDeck" parent="." instance=ExtResource("3_ypq4b")]
-position = Vector2(835, -345)
-type = 1
-
-[node name="GreatDeck" parent="." instance=ExtResource("3_ypq4b")]
-position = Vector2(85, -345)
+[node name="PoorDeck" parent="." instance=ExtResource("3_ypq4b")]
+position = Vector2(-855, -345)
 type = 1
 
 [node name="GoodDeck" parent="." instance=ExtResource("3_ypq4b")]
 position = Vector2(-385, -345)
 type = 1
 
-[node name="PoorDeck" parent="." instance=ExtResource("3_ypq4b")]
-position = Vector2(-855, -345)
+[node name="GreatDeck" parent="." instance=ExtResource("3_ypq4b")]
+position = Vector2(85, -345)
+type = 1
+
+[node name="ShiftDeck" parent="." instance=ExtResource("3_ypq4b")]
+position = Vector2(835, -345)
 type = 1
 
 [node name="Slot1" parent="." instance=ExtResource("4_o73ea")]

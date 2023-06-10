@@ -1,4 +1,7 @@
+class_name Workspace
 extends Node2D
+
+signal clicked(Workspace)
 
 var worker: Worker
 var client: Client
@@ -20,3 +23,8 @@ func add_client(card: Client) -> bool:
 	client = card
 	client.slide_to_position(_c_pos.x, _c_pos.y, 0, 0.2)
 	return true
+
+
+func _on_area2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed and worker != null:
+		emit_signal("clicked", self)

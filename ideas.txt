@@ -9,6 +9,9 @@ stress inducing session needs to be longer so the same worker needs to remain oc
 you more to do on your turn because you get to decide what all your little workers do rather than them only
 being interacted with when you're placing down a client card
 
+yeah there should be a system for doing something with ur workers each turn, like u do a service and it gives
+u some client happiness with determines which deck they discard to, and gives u overall reputation points
+
 the roster system is kind of fucked if you start with 2/4 cards and dont get new ones often
 like, you would never have any in reserve, but do u need any? idk figure it out
 

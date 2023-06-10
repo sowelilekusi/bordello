@@ -13,61 +13,59 @@ script = ExtResource("1_cg0id")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
-offset_left = 94.0
-offset_top = 4.0
-offset_right = 1027.0
-offset_bottom = 183.0
-theme_override_font_sizes/font_size = 129
+offset_left = 79.0
+offset_top = 31.0
+offset_right = 603.0
+offset_bottom = 159.0
+theme_override_font_sizes/font_size = 91
 text = "Lexi's Game"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Play Game" type="Button" parent="."]
 layout_mode = 0
-offset_left = 389.0
-offset_top = 187.0
-offset_right = 743.0
-offset_bottom = 350.0
-theme_override_font_sizes/font_size = 40
+offset_left = 31.0
+offset_top = 215.0
+offset_right = 281.0
+offset_bottom = 273.0
+theme_override_font_sizes/font_size = 36
 text = "Play"
 
 [node name="Worker Deck" type="Button" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 383.0
-offset_top = 394.0
-offset_right = 737.0
-offset_bottom = 557.0
-theme_override_font_sizes/font_size = 40
-text = "worker deck
-dev tool"
+offset_left = 874.0
+offset_top = 261.0
+offset_right = 1124.0
+offset_bottom = 319.0
+theme_override_font_sizes/font_size = 36
+text = "worker editor"
 
 [node name="Task Deck" type="Button" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 383.0
-offset_top = 570.0
-offset_right = 737.0
-offset_bottom = 733.0
-theme_override_font_sizes/font_size = 40
-text = "task deck
-dev tool"
+offset_left = 874.0
+offset_top = 332.0
+offset_right = 1124.0
+offset_bottom = 390.0
+theme_override_font_sizes/font_size = 36
+text = "client editor"
 
 [node name="CheckButton" type="CheckButton" parent="."]
 layout_mode = 0
-offset_left = 652.0
-offset_top = 343.0
-offset_right = 696.0
-offset_bottom = 367.0
-scale = Vector2(2, 2)
+offset_left = 1054.0
+offset_top = 221.0
+offset_right = 1098.0
+offset_bottom = 245.0
+scale = Vector2(1.5, 1.5)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 378.0
-offset_top = 344.0
-offset_right = 642.0
-offset_bottom = 402.0
-theme_override_font_sizes/font_size = 35
+offset_left = 895.0
+offset_top = 219.0
+offset_right = 1055.0
+offset_bottom = 253.0
+theme_override_font_sizes/font_size = 22
 text = "Show dev tools"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -1,6 +1,8 @@
 class_name Client
 extends Card
 
+signal time_slots_selected
+
 enum difficulties {EASY, MEDIUM, HARD}
 
 var icon_prefab = preload("res://Scenes/bonus_icon.tscn")
@@ -11,9 +13,11 @@ var turns_left = 4
 var time_slots = [true, true, false, true]
 var icon_list = []
 
+
 func _process(delta):
 	if sliding:
 		slide(delta)
+
 
 func setup(_title, _initial_stress, _time_slots, _services):
 	if _title != "":
@@ -38,20 +42,20 @@ func setup(_title, _initial_stress, _time_slots, _services):
 			difficulty = difficulties.MEDIUM
 		6, 7:
 			difficulty = difficulties.HARD
-	$Background/Slice1.visible = false
-	$Background/Slice2.visible = false
-	$Background/Slice3.visible = false
-	$Background/Slice4.visible = false
+	$front/Slice1.visible = false
+	$front/Slice2.visible = false
+	$front/Slice3.visible = false
+	$front/Slice4.visible = false
 	if time_slots[0] == true:
-		$Background/Slice1.visible = true
+		$front/Slice1.visible = true
 	if time_slots[1] == true:
-		$Background/Slice2.visible = true
+		$front/Slice2.visible = true
 	if time_slots[2] == true:
-		$Background/Slice3.visible = true
+		$front/Slice3.visible = true
 	if time_slots[3] == true:
-		$Background/Slice4.visible = true
-	$Background/Title.text = str(title)
-	$"Background/Initial Stress".text = str(initial_stress)
+		$front/Slice4.visible = true
+	$front/Title.text = str(title)
+	$"front/Initial Stress".text = str(initial_stress)
 	for x in icon_list:
 		x.queue_free()
 	icon_list = []
@@ -97,18 +101,28 @@ func setup(_title, _initial_stress, _time_slots, _services):
 			icon_list[x].set_service(services[x])
 		else:
 			icon_list[x].visible = false
-	
+
 
 func show_time_selector():
 	$Control.visible = true
 
+
 func update_counter():
 	$"Background/Turns Left Counter".text = str(turns_left)
 
-signal time_slots_selected
 
 func _on_turn_pressed(num):
 	turns_left = num
 	update_counter()
 	$Control.visible = false
 	time_slots_selected.emit()
+
+
+func turn_front():
+	$back.visible = false
+	$front.visible = true
+
+
+func turn_back():
+	$back.visible = true
+	$front.visible = false

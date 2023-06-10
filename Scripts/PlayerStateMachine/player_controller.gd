@@ -3,12 +3,18 @@ extends Node
 
 signal workers_discarded
 signal workers_kept
+signal turn_finished
+signal round_finished
 
 var player_info
 @export var hand_position: Node2D
+@export var client_position: Vector2
 var hand = []
 var draft_picked = []
 var draft_pick_amount = 0
+var reputation_points = 0
+var board: PlayerBoard
+var current_client: Client
 
 
 func draft(cards, pick):
@@ -32,7 +38,15 @@ func select_card(card):
 		card.slide_to_position(card.position.x, card.position.y + 50.0, 0.0, 0.1)
 
 
-@rpc("call_local")
+func select_workspace(workspace):
+	if current_client == null:
+		return
+	workspace.add_client(current_client)
+	current_client = null
+	rpc("end_turn")
+
+
+@rpc("call_local", "reliable")
 func confirm_draft():
 	var discarded_cards = []
 	var kept_cards = []
@@ -41,5 +55,23 @@ func confirm_draft():
 			discarded_cards.append(card.get_path())
 		else:
 			kept_cards.append(card.get_path())
+		card.card_clicked.disconnect(select_card)
 	workers_discarded.emit(discarded_cards)
 	workers_kept.emit(kept_cards)
+	draft_picked = []
+	hand = []
+	draft_pick_amount = 0
+
+
+func start_turn():
+	current_client = board.shift_deck.draw_card()
+	if current_client == null:
+		round_finished.emit()
+		return
+	current_client.slide_to_position(board.global_position.x, board.global_position.y, 0.0, 0.3)
+	current_client.turn_front()
+
+
+@rpc("call_local", "reliable")
+func end_turn():
+	turn_finished.emit()
