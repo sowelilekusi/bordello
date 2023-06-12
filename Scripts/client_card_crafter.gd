@@ -31,6 +31,7 @@ func _ready():
 	symbol_count_labels.append($"starcount")
 	symbol_count_labels.append($"chaincount")
 	symbol_count_labels.append($"gustcount")
+	$Control/Card.turn_front()
 	
 	load_deck()
 
@@ -75,6 +76,7 @@ func load_deck():
 		card_instance.setup(key, int(value[0]), bool_array, int_array)
 		card_instance.position = Vector2(-927, -176)
 		card_instance.scale = Vector2(1.288, 1.288)
+		card_instance.turn_front()
 		card_array.append(card_instance)
 		card_count += 1
 		if card_array.size() > 1:
@@ -177,6 +179,7 @@ func generate_card_from_buttons():
 	card_instance.setup(str($Control/LineEdit.text), card[0], card.slice(1, 5), card.slice(5, card.size()))
 	card_instance.position = Vector2(-926, -176)
 	card_instance.scale = Vector2(1.288, 1.288)
+	card_instance.turn_front()
 	card_array.append(card_instance)
 	card_count += 1
 	if card_array.size() > 1:

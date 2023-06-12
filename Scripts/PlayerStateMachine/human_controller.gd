@@ -8,7 +8,14 @@ signal chat_message_submitted(String)
 @onready var ready_label = $CanvasLayer/UI/HBoxContainer/LobbyReadyLabel
 @onready var canvas = $CanvasLayer
 @onready var chat_box = $CanvasLayer/UI/VBoxContainer/RichTextLabel
-var game_started = false
+@onready var cam_top = $CanvasLayer/UI/top_line
+@onready var cam_bottom = $CanvasLayer/UI/bottom_line
+@onready var cam_left = $CanvasLayer/UI/left_line
+@onready var cam_right = $CanvasLayer/UI/right_line
+@onready var cam_name = $CanvasLayer/UI/top_line/Label
+#So this is fucked but basically starting the first round requires hitting
+#the ready_self function exactly twice.
+var game_started = 0
 
 
 func _ready() -> void:
@@ -16,6 +23,22 @@ func _ready() -> void:
 		canvas.visible = false
 		return
 	$Camera2D.make_current()
+
+
+func spectate_player(player_path):
+	var player = get_node(player_path) as PlayerController
+	if player.player_info["username"] == player_info["username"]:
+		cam_top.visible = false
+		cam_left.visible = false
+		cam_right.visible = false
+		cam_bottom.visible = false
+	else:
+		cam_top.visible = true
+		cam_left.visible = true
+		cam_right.visible = true
+		cam_bottom.visible = true
+		cam_name.text = player.player_info["username"]
+	player.player_cam.make_current()
 
 
 @rpc("call_local", "reliable")
@@ -31,9 +54,17 @@ func update_ready_label(readied_players, total_players):
 
 
 func _on_lobby_ready_button_pressed() -> void:
-	rpc("ready_self")
 	ready_button.visible = false
-	rpc("end_turn")
+	if game_started < 2:
+		rpc("ready_self")
+		game_started += 1
+	else:
+		rpc("end_turn")
+
+
+func on_poor_discard_deck_clicked():
+	super()
+	ready_button.visible = true
 
 
 func add_chat_line(line: String) -> void:

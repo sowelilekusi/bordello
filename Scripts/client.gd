@@ -6,12 +6,30 @@ signal time_slots_selected
 enum difficulties {EASY, MEDIUM, HARD}
 
 var icon_prefab = preload("res://Scenes/bonus_icon.tscn")
+var bad_pip_sprite = preload("res://Assets/bad_pip.png")
+var medium_pip_sprite = preload("res://Assets/medium_pip.png")
+var good_pip_sprite = preload("res://Assets/good_pip.png")
 var title = "New Task"
 var difficulty = difficulties.EASY
 var initial_stress = 0
 var turns_left = 4
 var time_slots = [true, true, false, true]
 var icon_list = []
+var medium_threshold := 5
+var good_threshold := 8
+var satisfaction := 1
+@export var pip_sprites: Array[TextureRect] = []
+
+
+func _ready():
+	pip_sprites.append($front/pip2)
+	pip_sprites.append($front/pip3)
+	pip_sprites.append($front/pip4)
+	pip_sprites.append($front/pip5)
+	pip_sprites.append($front/pip6)
+	pip_sprites.append($front/pip7)
+	pip_sprites.append($front/pip8)
+	pip_sprites.append($front/pip9)
 
 
 func _process(delta):
@@ -19,11 +37,22 @@ func _process(delta):
 		slide(delta)
 
 
-func setup(_title, _initial_stress, _time_slots, _services):
+func setup(_title, _initial_stress, _time_slots, _services, _medium, _good):
 	if _title != "":
 		title = _title
 	initial_stress = _initial_stress
 	time_slots = _time_slots
+	medium_threshold = _medium
+	good_threshold = _good
+	for x in pip_sprites.size():
+		if x < 2:
+			continue
+		if x >= good_threshold:
+			pip_sprites[x - 2].texture = good_pip_sprite
+		if x < good_threshold:
+			pip_sprites[x - 2].texture = medium_pip_sprite
+		if x < medium_threshold:
+			pip_sprites[x - 2].texture = bad_pip_sprite
 	if time_slots[0] == true:
 		$"Control/1turn".visible = true
 	if time_slots[1] == true:

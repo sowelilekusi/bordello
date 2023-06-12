@@ -120,6 +120,7 @@ func add_player(id: int, username: String, type: PlayerType) -> void:
 	board.slots[1].clicked.connect(controller.select_workspace)
 	board.slots[2].clicked.connect(controller.select_workspace)
 	board.slots[3].clicked.connect(controller.select_workspace)
+	board.poor_deck.clicked.connect(controller.on_poor_discard_deck_clicked)
 	board.name = "board " + str(player_boards.size())
 	player_boards.append(board)
 	players.append(controller)
@@ -146,6 +147,8 @@ func ready_player(id):
 		if round_number == 0:
 			rpc("start_game")
 		else:
+			for player in players:
+				player.ready_button_pressed.disconnect(ready_player)
 			rpc("start_round")
 
 
@@ -183,6 +186,8 @@ func start_turn():
 	turn_number += 1
 	for x in players.size():
 		#players[x].rpc("start_turn")
+		for other_player in players:
+			other_player.spectate_player(players[x].get_path())
 		players[x].start_turn()
 		await players[x].turn_finished
 	if is_multiplayer_authority():

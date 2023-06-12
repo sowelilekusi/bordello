@@ -8,6 +8,7 @@
 script = ExtResource("1_vn0ae")
 
 [node name="main_camera" type="Camera2D" parent="."]
+zoom = Vector2(0.6, 0.6)
 
 [node name="background_image" type="Sprite2D" parent="."]
 texture = ExtResource("2_1kq1c")

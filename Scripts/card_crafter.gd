@@ -73,7 +73,7 @@ func load_deck():
 		for x in value.slice(1, value.size()):
 			bonuses.append(int(x))
 		card_instance.setup(key, int(value[0]), bonuses)
-		card_instance.position = Vector2(-713, -17)
+		card_instance.position = Vector2(-896, -274)
 		card_instance.scale = Vector2(1.45, 1.45)
 		card_array.append(card_instance)
 		card_count += 1
@@ -224,7 +224,7 @@ func generate_card_from_buttons():
 		return
 	var card_instance = card_scene.instantiate()
 	card_instance.setup(str($name_box.text), card[0], card.slice(1, card.size()))
-	card_instance.position = Vector2(-713, -17)
+	card_instance.position = Vector2(-896, -274)
 	card_instance.scale = Vector2(1.45, 1.45)
 	card_array.append(card_instance)
 	card_count += 1

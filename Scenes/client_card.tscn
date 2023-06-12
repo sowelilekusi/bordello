@@ -1,11 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7j6lwbwgbosr"]
+[gd_scene load_steps=13 format=3 uid="uid://c7j6lwbwgbosr"]
 
 [ext_resource type="Script" path="res://Scripts/client.gd" id="1_bvmvn"]
 [ext_resource type="Texture2D" uid="uid://dpu7jjppeja2v" path="res://Assets/task.png" id="2_k2tqp"]
 [ext_resource type="Texture2D" uid="uid://de0gq6h0onwex" path="res://Assets/slice.png" id="3_pxlet"]
 [ext_resource type="Texture2D" uid="uid://b72amudxuxo8n" path="res://Assets/hard.png" id="4_8gylx"]
+[ext_resource type="Texture2D" uid="uid://qhoam0u12smd" path="res://Assets/bad_pip.png" id="4_h1e7v"]
 [ext_resource type="Texture2D" uid="uid://bj07g3riacndc" path="res://Assets/back.png" id="4_tye4g"]
+[ext_resource type="Texture2D" uid="uid://dsqwv4h4oynxu" path="res://Assets/medium_pip.png" id="5_2itu6"]
 [ext_resource type="Texture2D" uid="uid://ws1ghxt16a54" path="res://Assets/hardest.png" id="5_hl5js"]
+[ext_resource type="Texture2D" uid="uid://bo6ohnvl8b64o" path="res://Assets/good_pip.png" id="6_6ba24"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xciys"]
 font_size = 25
@@ -95,6 +98,70 @@ offset_left = 354.0
 offset_right = 394.0
 offset_bottom = 26.0
 text = "0"
+
+[node name="pip2" type="TextureRect" parent="front"]
+layout_mode = 0
+offset_left = 149.0
+offset_top = 209.0
+offset_right = 169.0
+offset_bottom = 223.0
+texture = ExtResource("4_h1e7v")
+
+[node name="pip3" type="TextureRect" parent="front"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 209.0
+offset_right = 189.0
+offset_bottom = 223.0
+texture = ExtResource("4_h1e7v")
+
+[node name="pip4" type="TextureRect" parent="front"]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 209.0
+offset_right = 209.0
+offset_bottom = 223.0
+texture = ExtResource("4_h1e7v")
+
+[node name="pip5" type="TextureRect" parent="front"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 209.0
+offset_right = 229.0
+offset_bottom = 223.0
+texture = ExtResource("5_2itu6")
+
+[node name="pip6" type="TextureRect" parent="front"]
+layout_mode = 0
+offset_left = 229.0
+offset_top = 209.0
+offset_right = 249.0
+offset_bottom = 223.0
+texture = ExtResource("5_2itu6")
+
+[node name="pip7" type="TextureRect" parent="front"]
+layout_mode = 0
+offset_left = 249.0
+offset_top = 209.0
+offset_right = 269.0
+offset_bottom = 223.0
+texture = ExtResource("5_2itu6")
+
+[node name="pip8" type="TextureRect" parent="front"]
+layout_mode = 0
+offset_left = 269.0
+offset_top = 209.0
+offset_right = 289.0
+offset_bottom = 223.0
+texture = ExtResource("6_6ba24")
+
+[node name="pip9" type="TextureRect" parent="front"]
+layout_mode = 0
+offset_left = 289.0
+offset_top = 209.0
+offset_right = 309.0
+offset_bottom = 223.0
+texture = ExtResource("6_6ba24")
 
 [node name="easy" type="Node2D" parent="."]
 visible = false

@@ -3,9 +3,10 @@
 [ext_resource type="Script" path="res://Scripts/PlayerStateMachine/human_controller.gd" id="1_4thxs"]
 [ext_resource type="Theme" uid="uid://d26ldkm1br1bo" path="res://UI_Theme.tres" id="2_ja0q8"]
 
-[node name="HumanPlayer" type="Node2D" node_paths=PackedStringArray("hand_position")]
+[node name="HumanPlayer" type="Node2D" node_paths=PackedStringArray("hand_position", "player_cam")]
 script = ExtResource("1_4thxs")
 hand_position = NodePath("Node2D")
+player_cam = NodePath("Camera2D")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -138,6 +139,87 @@ grow_vertical = 2
 text = "$50"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="top_line" type="HBoxContainer" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 56.0
+grow_horizontal = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/UI/top_line"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/UI/top_line/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.85098, 0, 1, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/UI/top_line"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0, 1, 1)
+text = "sowelijanpona"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/top_line"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI/top_line/MarginContainer"]
+layout_mode = 2
+color = Color(0.85098, 0, 1, 1)
+
+[node name="left_line" type="ColorRect" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 40.0
+offset_right = 36.0
+offset_bottom = -40.0
+grow_vertical = 2
+color = Color(0.85098, 0, 1, 1)
+
+[node name="right_line" type="ColorRect" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = 40.0
+offset_right = -30.0
+offset_bottom = -46.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.85098, 0, 1, 1)
+
+[node name="bottom_line" type="ColorRect" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -46.0
+offset_right = -30.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.85098, 0, 1, 1)
 
 [connection signal="pressed" from="CanvasLayer/UI/Confirm" to="." method="_on_confirm_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/LobbyReadyButton" to="." method="_on_lobby_ready_button_pressed"]

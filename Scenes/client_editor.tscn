@@ -49,6 +49,7 @@ region = Rect2(288, 0, 32, 32)
 script = ExtResource("1_lgqnu")
 
 [node name="main_camera" type="Camera2D" parent="."]
+zoom = Vector2(0.6, 0.6)
 
 [node name="background_image" type="Sprite2D" parent="."]
 texture = ExtResource("2_58m7y")

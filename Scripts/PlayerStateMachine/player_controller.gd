@@ -9,6 +9,7 @@ signal round_finished
 var player_info
 @export var hand_position: Node2D
 @export var client_position: Vector2
+@export var player_cam: Camera2D
 var hand = []
 var draft_picked = []
 var draft_pick_amount = 0
@@ -30,20 +31,52 @@ func draft(cards, pick):
 
 
 func select_card(card):
+	if not is_multiplayer_authority():
+		return
 	if not draft_picked.has(card) and draft_picked.size() < draft_pick_amount:
 		draft_picked.append(card)
+		rpc("networked_select_card", true, card.get_path())
 		card.slide_to_position(card.position.x, card.position.y - 50.0, 0.0, 0.1)
 	elif draft_picked.has(card):
 		draft_picked.remove_at(draft_picked.find(card))
+		rpc("networked_select_card", false, card.get_path())
 		card.slide_to_position(card.position.x, card.position.y + 50.0, 0.0, 0.1)
 
 
+@rpc("reliable")
+func networked_select_card(add, card_path):
+	if add:
+		draft_picked.append(get_node(card_path))
+	else:
+		draft_picked.remove_at(draft_picked.find(get_node(card_path)))
+
+
 func select_workspace(workspace):
+	if not is_multiplayer_authority():
+		return
 	if current_client == null:
 		return
-	workspace.add_client(current_client)
+	rpc("networked_select_workspace", workspace.get_path(), current_client.get_path())
+	#workspace.add_client(current_client)
 	current_client = null
-	rpc("end_turn")
+	#rpc("end_turn")
+
+
+func on_poor_discard_deck_clicked():
+	if not is_multiplayer_authority():
+		return
+	rpc("turn_away_client")
+
+
+@rpc("call_local", "reliable")
+func turn_away_client():
+	board.poor_deck.place(current_client)
+	current_client = null
+
+
+@rpc("call_local", "reliable")
+func networked_select_workspace(workspace_path, current_client_path):
+	get_node(workspace_path).add_client(get_node(current_client_path))
 
 
 @rpc("call_local", "reliable")
