@@ -73,7 +73,6 @@ func load_deck():
 			bool_array.append(bool(x))
 		for x in value.slice(5, value.size()):
 			int_array.append(int(x))
-		card_instance.setup(key, int(value[0]), bool_array, int_array)
 		card_instance.position = Vector2(-927, -176)
 		card_instance.scale = Vector2(1.288, 1.288)
 		card_instance.turn_front()
@@ -83,6 +82,7 @@ func load_deck():
 			card_array[selected_card].visible = false
 		selected_card = card_array.size() - 1
 		add_child(card_instance)
+		card_instance.setup(key, int(value[0]), bool_array, int_array)
 	$Control/LineEdit.text = "task " + str(card_count)
 	count_traits()
 	$card_count.text = str(selected_card + 1) + "/" + str(card_array.size())
@@ -111,13 +111,6 @@ func count_traits():
 	var difficulty_counts = [0, 0, 0]
 	var symbol_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 	for card in card_array:
-		match card.difficulty:
-			0:
-				difficulty_counts[0] += 1
-			1:
-				difficulty_counts[1] += 1
-			2:
-				difficulty_counts[2] += 1
 		for x in 10:
 			if x == 0:
 				continue
@@ -145,10 +138,6 @@ func determine_card():
 		services.append($Control/ItemList3.selected)
 	if $Control/ItemList4.selected > 0:
 		services.append($Control/ItemList4.selected)
-	if $Control/ItemList5.selected > 0:
-		services.append($Control/ItemList5.selected)
-	if $Control/ItemList6.selected > 0:
-		services.append($Control/ItemList6.selected)
 	card.append_array(services)
 	return card
 
@@ -176,7 +165,6 @@ func generate_card_from_buttons():
 	if card == null:
 		return
 	var card_instance = card_scene.instantiate()
-	card_instance.setup(str($Control/LineEdit.text), card[0], card.slice(1, 5), card.slice(5, card.size()))
 	card_instance.position = Vector2(-926, -176)
 	card_instance.scale = Vector2(1.288, 1.288)
 	card_instance.turn_front()
@@ -186,6 +174,7 @@ func generate_card_from_buttons():
 		card_array[selected_card].visible = false
 	selected_card = card_array.size() - 1
 	add_child(card_instance)
+	card_instance.setup(str($Control/LineEdit.text), card[0], card.slice(1, 5), card.slice(5, card.size()))
 	$Control/LineEdit.text = "task " + str(card_count)
 	count_traits()
 	$card_count.text = str(selected_card + 1) + "/" + str(card_array.size())

@@ -58,6 +58,7 @@ func select_workspace(workspace):
 		return
 	rpc("networked_select_workspace", workspace.get_path(), current_client.get_path())
 	#workspace.add_client(current_client)
+	current_client.show_time_selector()
 	current_client = null
 	#rpc("end_turn")
 

@@ -1,14 +1,22 @@
-[gd_scene load_steps=13 format=3 uid="uid://c7j6lwbwgbosr"]
+[gd_scene load_steps=25 format=3 uid="uid://c7j6lwbwgbosr"]
 
 [ext_resource type="Script" path="res://Scripts/client.gd" id="1_bvmvn"]
 [ext_resource type="Texture2D" uid="uid://dpu7jjppeja2v" path="res://Assets/task.png" id="2_k2tqp"]
 [ext_resource type="Texture2D" uid="uid://de0gq6h0onwex" path="res://Assets/slice.png" id="3_pxlet"]
-[ext_resource type="Texture2D" uid="uid://b72amudxuxo8n" path="res://Assets/hard.png" id="4_8gylx"]
 [ext_resource type="Texture2D" uid="uid://qhoam0u12smd" path="res://Assets/bad_pip.png" id="4_h1e7v"]
 [ext_resource type="Texture2D" uid="uid://bj07g3riacndc" path="res://Assets/back.png" id="4_tye4g"]
 [ext_resource type="Texture2D" uid="uid://dsqwv4h4oynxu" path="res://Assets/medium_pip.png" id="5_2itu6"]
-[ext_resource type="Texture2D" uid="uid://ws1ghxt16a54" path="res://Assets/hardest.png" id="5_hl5js"]
 [ext_resource type="Texture2D" uid="uid://bo6ohnvl8b64o" path="res://Assets/good_pip.png" id="6_6ba24"]
+[ext_resource type="PackedScene" uid="uid://cqy1p45nku4hr" path="res://Scenes/bonus_icon.tscn" id="7_24rgf"]
+[ext_resource type="Texture2D" uid="uid://ffu6m58vkcmm" path="res://Assets/watch.png" id="9_uqpfx"]
+[ext_resource type="Texture2D" uid="uid://bvn600licjeml" path="res://Assets/30min.png" id="10_8sc0o"]
+[ext_resource type="Texture2D" uid="uid://b8wsa3qkt5w71" path="res://Assets/45min.png" id="11_bvudy"]
+[ext_resource type="Texture2D" uid="uid://lpq7mg772eix" path="res://Assets/15min_hovered.png" id="11_prrc3"]
+[ext_resource type="Texture2D" uid="uid://d2po8n2mbv375" path="res://Assets/1hour.png" id="12_lheht"]
+[ext_resource type="Texture2D" uid="uid://di826qgsyf8ed" path="res://Assets/15min.png" id="13_mmi0r"]
+[ext_resource type="Texture2D" uid="uid://dolp5x82fgr1l" path="res://Assets/30min_hovered.png" id="13_s80fk"]
+[ext_resource type="Texture2D" uid="uid://0o3k8q5k10oc" path="res://Assets/45min_hovered.png" id="15_72glw"]
+[ext_resource type="Texture2D" uid="uid://pparncsv7qag" path="res://Assets/1hour_hovered.png" id="17_3rk3r"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xciys"]
 font_size = 25
@@ -16,6 +24,18 @@ shadow_size = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_88ebh"]
 font_size = 24
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obgb8"]
+size = Vector2(59.8477, 59.3524)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_055ge"]
+size = Vector2(62.4642, 56.7848)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4n4wm"]
+size = Vector2(68.011, 58.4376)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c0coy"]
+size = Vector2(60.7945, 58.1036)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_70vuu"]
 size = Vector2(350, 250)
@@ -35,9 +55,9 @@ modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 layout_mode = 0
 offset_left = 166.0
-offset_top = 6.0
+offset_top = 10.0
 offset_right = 296.0
-offset_bottom = 44.0
+offset_bottom = 48.0
 label_settings = SubResource("LabelSettings_xciys")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -47,16 +67,17 @@ uppercase = true
 modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 layout_mode = 0
-offset_left = 117.0
-offset_top = 6.0
-offset_right = 156.0
-offset_bottom = 43.0
+offset_left = 119.0
+offset_top = 11.0
+offset_right = 158.0
+offset_bottom = 48.0
 label_settings = SubResource("LabelSettings_88ebh")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
 [node name="Slice1" type="TextureRect" parent="front"]
+visible = false
 layout_mode = 0
 offset_left = 318.0
 offset_top = 12.0
@@ -65,6 +86,7 @@ offset_bottom = 30.0
 texture = ExtResource("3_pxlet")
 
 [node name="Slice2" type="TextureRect" parent="front"]
+visible = false
 layout_mode = 0
 offset_left = 318.0
 offset_top = 28.0
@@ -74,6 +96,7 @@ texture = ExtResource("3_pxlet")
 flip_v = true
 
 [node name="Slice3" type="TextureRect" parent="front"]
+visible = false
 layout_mode = 0
 offset_left = 302.0
 offset_top = 28.0
@@ -84,6 +107,7 @@ flip_h = true
 flip_v = true
 
 [node name="Slice4" type="TextureRect" parent="front"]
+visible = false
 layout_mode = 0
 offset_left = 302.0
 offset_top = 12.0
@@ -163,133 +187,21 @@ offset_right = 309.0
 offset_bottom = 223.0
 texture = ExtResource("6_6ba24")
 
-[node name="easy" type="Node2D" parent="."]
+[node name="Bonus1" parent="front" instance=ExtResource("7_24rgf")]
 visible = false
+position = Vector2(156, 109)
 
-[node name="Standard" type="Node2D" parent="easy"]
-position = Vector2(134, 73)
-scale = Vector2(0.5, 0.5)
-
-[node name="Great1" type="Node2D" parent="easy"]
-position = Vector2(180, 151)
-scale = Vector2(0.9, 0.9)
-
-[node name="Great2" type="Node2D" parent="easy"]
-position = Vector2(270, 151)
-scale = Vector2(0.9, 0.9)
-
-[node name="medium" type="Node2D" parent="."]
+[node name="Bonus2" parent="front" instance=ExtResource("7_24rgf")]
 visible = false
+position = Vector2(260, 109)
 
-[node name="Background_Image" type="TextureRect" parent="medium"]
-offset_left = 117.0
-offset_top = 55.0
-offset_right = 340.0
-offset_bottom = 187.0
-texture = ExtResource("4_8gylx")
-
-[node name="Standard" type="Node2D" parent="medium"]
-position = Vector2(134, 73)
-scale = Vector2(0.5, 0.5)
-
-[node name="Good1" type="Node2D" parent="medium"]
-position = Vector2(180, 105)
-scale = Vector2(0.9, 0.9)
-
-[node name="Good2" type="Node2D" parent="medium"]
-position = Vector2(270, 105)
-scale = Vector2(0.9, 0.9)
-
-[node name="Great1" type="Node2D" parent="medium"]
-position = Vector2(180, 196)
-scale = Vector2(0.9, 0.9)
-
-[node name="Great2" type="Node2D" parent="medium"]
-position = Vector2(270, 196)
-scale = Vector2(0.9, 0.9)
-
-[node name="hard" type="Node2D" parent="."]
+[node name="Bonus3" parent="front" instance=ExtResource("7_24rgf")]
 visible = false
+position = Vector2(156, 171)
 
-[node name="Background_Image" type="TextureRect" parent="hard"]
-offset_left = 117.0
-offset_top = 55.0
-offset_right = 340.0
-offset_bottom = 187.0
-texture = ExtResource("5_hl5js")
-
-[node name="Standard" type="Node2D" parent="hard"]
-position = Vector2(134, 73)
-scale = Vector2(0.5, 0.5)
-
-[node name="Poor1" type="Node2D" parent="hard"]
-position = Vector2(180, 87)
-scale = Vector2(0.9, 0.9)
-
-[node name="Poor2" type="Node2D" parent="hard"]
-position = Vector2(270, 87)
-scale = Vector2(0.9, 0.9)
-
-[node name="Good1" type="Node2D" parent="hard"]
-position = Vector2(180, 151)
-scale = Vector2(0.9, 0.9)
-
-[node name="Good2" type="Node2D" parent="hard"]
-position = Vector2(270, 151)
-scale = Vector2(0.9, 0.9)
-
-[node name="Great1" type="Node2D" parent="hard"]
-position = Vector2(180, 209)
-scale = Vector2(0.9, 0.9)
-
-[node name="Great2" type="Node2D" parent="hard"]
-position = Vector2(270, 209)
-scale = Vector2(0.9, 0.9)
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(175, 125)
-shape = SubResource("RectangleShape2D_70vuu")
-
-[node name="Control" type="Control" parent="."]
+[node name="Bonus4" parent="front" instance=ExtResource("7_24rgf")]
 visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="4turn" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 91.0
-offset_top = 56.0
-offset_right = 155.0
-offset_bottom = 118.0
-text = "4"
-
-[node name="3turn" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 90.0
-offset_top = 131.0
-offset_right = 154.0
-offset_bottom = 193.0
-text = "3"
-
-[node name="2turn" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 176.0
-offset_top = 132.0
-offset_right = 240.0
-offset_bottom = 194.0
-text = "2"
-
-[node name="1turn" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 176.0
-offset_top = 56.0
-offset_right = 240.0
-offset_bottom = 118.0
-text = "1"
+position = Vector2(260, 171)
 
 [node name="back" type="TextureRect" parent="."]
 offset_top = 250.0
@@ -298,7 +210,113 @@ offset_bottom = 600.0
 rotation = -1.5708
 texture = ExtResource("4_tye4g")
 
-[connection signal="pressed" from="Control/4turn" to="." method="_on_turn_pressed" binds= [4]]
-[connection signal="pressed" from="Control/3turn" to="." method="_on_turn_pressed" binds= [3]]
-[connection signal="pressed" from="Control/2turn" to="." method="_on_turn_pressed" binds= [2]]
-[connection signal="pressed" from="Control/1turn" to="." method="_on_turn_pressed" binds= [1]]
+[node name="watch" type="TextureRect" parent="."]
+visible = false
+offset_right = 350.0
+offset_bottom = 250.0
+texture = ExtResource("9_uqpfx")
+
+[node name="time1" type="TextureRect" parent="watch"]
+visible = false
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 250.0
+texture = ExtResource("13_mmi0r")
+
+[node name="time2" type="TextureRect" parent="watch"]
+visible = false
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 250.0
+texture = ExtResource("10_8sc0o")
+
+[node name="time3" type="TextureRect" parent="watch"]
+visible = false
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 250.0
+texture = ExtResource("11_bvudy")
+
+[node name="time4" type="TextureRect" parent="watch"]
+visible = false
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 250.0
+texture = ExtResource("12_lheht")
+
+[node name="time_hovered1" type="TextureRect" parent="watch"]
+visible = false
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 250.0
+texture = ExtResource("11_prrc3")
+
+[node name="time_hovered2" type="TextureRect" parent="watch"]
+visible = false
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 250.0
+texture = ExtResource("13_s80fk")
+
+[node name="time_hovered3" type="TextureRect" parent="watch"]
+visible = false
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 250.0
+texture = ExtResource("15_72glw")
+
+[node name="time_hovered4" type="TextureRect" parent="watch"]
+visible = false
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 250.0
+texture = ExtResource("17_3rk3r")
+
+[node name="Area2D2" type="Area2D" parent="watch"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="watch/Area2D2"]
+position = Vector2(212.509, 120.249)
+rotation = 0.306916
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_obgb8")
+
+[node name="Area2D3" type="Area2D" parent="watch"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="watch/Area2D3"]
+position = Vector2(187.897, 177.388)
+rotation = 0.349425
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_055ge")
+
+[node name="Area2D4" type="Area2D" parent="watch"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="watch/Area2D4"]
+position = Vector2(120.328, 158.61)
+rotation = 0.386902
+shape = SubResource("RectangleShape2D_4n4wm")
+
+[node name="Area2D" type="Area2D" parent="watch"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="watch/Area2D"]
+position = Vector2(149, 101)
+rotation = 0.365652
+shape = SubResource("RectangleShape2D_c0coy")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(175, 125)
+shape = SubResource("RectangleShape2D_70vuu")
+
+[connection signal="input_event" from="watch/Area2D2" to="." method="_on_watch_segment_input_event" binds= [0]]
+[connection signal="mouse_entered" from="watch/Area2D2" to="." method="_on_watch_segment_mouse_entered" binds= [0]]
+[connection signal="mouse_exited" from="watch/Area2D2" to="." method="_on_watch_segment_mouse_exited" binds= [0]]
+[connection signal="input_event" from="watch/Area2D3" to="." method="_on_watch_segment_input_event" binds= [1]]
+[connection signal="mouse_entered" from="watch/Area2D3" to="." method="_on_watch_segment_mouse_entered" binds= [1]]
+[connection signal="mouse_exited" from="watch/Area2D3" to="." method="_on_watch_segment_mouse_exited" binds= [1]]
+[connection signal="input_event" from="watch/Area2D4" to="." method="_on_watch_segment_input_event" binds= [2]]
+[connection signal="mouse_entered" from="watch/Area2D4" to="." method="_on_watch_segment_mouse_entered" binds= [2]]
+[connection signal="mouse_exited" from="watch/Area2D4" to="." method="_on_watch_segment_mouse_exited" binds= [2]]
+[connection signal="input_event" from="watch/Area2D" to="." method="_on_watch_segment_input_event" binds= [3]]
+[connection signal="mouse_entered" from="watch/Area2D" to="." method="_on_watch_segment_mouse_entered" binds= [3]]
+[connection signal="mouse_exited" from="watch/Area2D" to="." method="_on_watch_segment_mouse_exited" binds= [3]]

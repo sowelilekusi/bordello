@@ -12,6 +12,6 @@ func get_icon(x):
 
 func set_service(_service):
 	service = _service
-	$Label.text = str(Data.service_prices[service])
+	$Label.text = "$" + str(Data.service_prices[service])
 	$Label.visible = true
 	$"Icon1".region_rect = Rect2(get_icon(service), 0, 32, 32)

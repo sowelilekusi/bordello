@@ -72,8 +72,8 @@ func _load_clients():
 			bool_array.append(bool(x))
 		for x in value.slice(5, value.size()):
 			int_array.append(int(x))
-		card_instance.setup(key, int(value[0]), bool_array, int_array)
 		add_child(card_instance)
+		card_instance.setup(key, int(value[0]), bool_array, int_array)
 		client_deck.place(card_instance)
 	client_deck.shuffle()
 
