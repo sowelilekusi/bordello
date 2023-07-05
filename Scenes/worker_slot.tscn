@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://baoec8cqmedf6"]
 
-[ext_resource type="Script" path="res://Scripts/worker_slot.gd" id="1_0xyh3"]
+[ext_resource type="Script" path="res://Scripts/workspace.gd" id="1_0xyh3"]
 [ext_resource type="Texture2D" uid="uid://cpitf556hf0g" path="res://Assets/worker_slot.png" id="1_fxq0t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1gv0f"]

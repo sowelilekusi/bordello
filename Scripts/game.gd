@@ -121,6 +121,7 @@ func add_player(id: int, username: String, type: PlayerType) -> void:
 	board.slots[2].clicked.connect(controller.select_workspace)
 	board.slots[3].clicked.connect(controller.select_workspace)
 	board.poor_deck.clicked.connect(controller.on_poor_discard_deck_clicked)
+	board.clients_discarded.connect(discard_clients)
 	board.name = "board " + str(player_boards.size())
 	player_boards.append(board)
 	players.append(controller)
@@ -223,15 +224,21 @@ func discard_workers(node_paths):
 
 @rpc("call_local", "reliable")
 func draft_clients(player):
-	var cards = []
-	for x in 2 + (2 * round_number):
-		cards.append(client_deck.draw_card())
-	for x in player_boards:
-		if x.player_info["username"] == player:
-			for card in cards:
-				x.shift_deck.place(card)
+	var controller: PlayerController = null
+	for player_controller in players:
+		if player_controller.player_info["username"] == player:
+			controller = player_controller
+	var cards_to_draw = 4
+	if controller.reputation_points >= 30:
+		cards_to_draw += 4
+	if controller.reputation_points >= 60:
+		cards_to_draw += 4
+	for x in cards_to_draw - controller.board.shift_deck.cards.size():
+		controller.board.shift_deck.place(client_deck.draw_card())
 
 
 @rpc("call_local", "reliable")
-func discard_clients(_node_paths):
-	pass
+func discard_clients(node_paths):
+	for path in node_paths:
+		var card = get_node(path)
+		client_discard.place(card)

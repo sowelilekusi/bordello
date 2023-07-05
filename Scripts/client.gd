@@ -19,6 +19,7 @@ var watch_on := false
 @export var pip_sprites: Array[TextureRect] = []
 @export var time_button_sprites: Array[TextureRect] = []
 @export var time_hovered_sprites: Array[TextureRect] = []
+@export var watch: TextureRect
 
 
 func _ready():
@@ -106,7 +107,7 @@ func setup(_title, _initial_stress, _time_slots, _services):
 
 func show_time_selector():
 	watch_on = true
-	$watch.visible = true
+	watch.visible = true
 
 
 func update_counter():
@@ -116,7 +117,7 @@ func update_counter():
 func _on_turn_pressed(num):
 	turns_left = num
 	update_counter()
-	$watch.visible = false
+	watch.visible = false
 	watch_on = false
 	time_slots_selected.emit()
 
@@ -131,6 +132,11 @@ func turn_back():
 	$front.visible = false
 
 
+func set_satisfaction(num):
+	satisfaction = 1 + num
+	$front/ColorRect.position.x = 134 + ((satisfaction - 1) * 20.0)
+
+
 func _on_watch_segment_mouse_entered(extra_arg_0: int) -> void:
 	if not watch_on or not time_slots[extra_arg_0]:
 		return
@@ -138,11 +144,11 @@ func _on_watch_segment_mouse_entered(extra_arg_0: int) -> void:
 		time_hovered_sprites[x].visible = true
 
 
-func _on_watch_segment_mouse_exited(extra_arg_0: int) -> void:
+func _on_watch_segment_mouse_exited(_extra_arg_0: int) -> void:
 	for sprite in time_hovered_sprites:
 		sprite.visible = false
 
 
-func _on_watch_segment_input_event(viewport: Node, event: InputEvent, shape_idx: int, extra_arg_0: int) -> void:
+func _on_watch_segment_input_event(_viewport: Node, event: InputEvent, _shape_idx: int, extra_arg_0: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		_on_turn_pressed(extra_arg_0 + 1)

@@ -16,6 +16,7 @@ var draft_pick_amount = 0
 var reputation_points = 0
 var board: PlayerBoard
 var current_client: Client
+var current_workspace: Workspace
 
 
 func draft(cards, pick):
@@ -25,7 +26,8 @@ func draft(cards, pick):
 		var card = cards[x]
 		var ratio = float(x) / float(cards.size() - 1)
 		var xx = lerpf(-1 * xxx, xxx, ratio)
-		card.slide_to_position(hand_position.global_position.x + xx - 125.0, hand_position.global_position.y - 175.0, 0.0, 0.2)
+		var h = hand_position.global_position
+		card.slide_to_position(h.x + xx - 125.0, h.y - 175.0, 0.0, 0.2)
 		hand.append(card)
 		card.card_clicked.connect(select_card)
 
@@ -53,18 +55,21 @@ func networked_select_card(add, card_path):
 
 func select_workspace(workspace):
 	if not is_multiplayer_authority():
-		return
-	if current_client == null:
-		return
+		return false
+	if current_client == null or workspace.worker == null:
+		return false
+	if workspace == current_workspace or workspace.client != null:
+		return false
+	if current_workspace != null:
+		current_workspace.remove_client()
+	current_workspace = workspace
 	rpc("networked_select_workspace", workspace.get_path(), current_client.get_path())
-	#workspace.add_client(current_client)
 	current_client.show_time_selector()
-	current_client = null
-	#rpc("end_turn")
+	return true
 
 
 func on_poor_discard_deck_clicked():
-	if not is_multiplayer_authority():
+	if not is_multiplayer_authority() or current_client == null:
 		return
 	rpc("turn_away_client")
 
@@ -72,12 +77,16 @@ func on_poor_discard_deck_clicked():
 @rpc("call_local", "reliable")
 func turn_away_client():
 	board.poor_deck.place(current_client)
+	current_client.set_satisfaction(0)
+	if current_workspace != null:
+		current_workspace.remove_client()
 	current_client = null
 
 
 @rpc("call_local", "reliable")
 func networked_select_workspace(workspace_path, current_client_path):
 	get_node(workspace_path).add_client(get_node(current_client_path))
+	get_node(workspace_path).evaluate_match()
 
 
 @rpc("call_local", "reliable")
@@ -100,12 +109,23 @@ func confirm_draft():
 func start_turn():
 	current_client = board.shift_deck.draw_card()
 	if current_client == null:
-		round_finished.emit()
-		return
-	current_client.slide_to_position(board.global_position.x, board.global_position.y, 0.0, 0.3)
-	current_client.turn_front()
+		end_of_round()
+	else:
+		current_client.slide_to_position(board.global_position.x, board.global_position.y, 0.0, 0.3)
+		current_client.turn_front()
+
+
+func end_of_round():
+	board.time_step(true)
+	reputation_points += board.process_decks()
+	if reputation_points < 0:
+		reputation_points = 0
+	round_finished.emit()
 
 
 @rpc("call_local", "reliable")
 func end_turn():
+	board.time_step(false)
+	current_client = null
+	current_workspace = null
 	turn_finished.emit()

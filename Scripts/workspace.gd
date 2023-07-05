@@ -25,6 +25,36 @@ func add_client(card: Client) -> bool:
 	return true
 
 
+func remove_client():
+	var c = client
+	client = null
+	return c
+
+
+func evaluate_match():
+	if worker == null or client == null:
+		return
+	var points = -1
+	for service in client.services:
+		if worker.services.has(service):
+			points += 1
+	points += client.turns_left
+	client.set_satisfaction(points)
+
+
+func time_step(skip_ahead: bool):
+	if worker == null or client == null:
+		return null
+	client.turns_left -= 1
+	if skip_ahead:
+		client.turns_left = 0
+	client.update_counter()
+	if client.turns_left > 0:
+		return null
+	else:
+		return remove_client()
+
+
 func _on_area2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and worker != null:
 		emit_signal("clicked", self)

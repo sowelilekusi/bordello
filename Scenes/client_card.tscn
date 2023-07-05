@@ -40,8 +40,9 @@ size = Vector2(60.7945, 58.1036)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_70vuu"]
 size = Vector2(350, 250)
 
-[node name="Card" type="Node2D"]
+[node name="Card" type="Node2D" node_paths=PackedStringArray("watch")]
 script = ExtResource("1_bvmvn")
+watch = NodePath("watch")
 
 [node name="front" type="TextureRect" parent="."]
 visible = false
@@ -187,6 +188,14 @@ offset_right = 309.0
 offset_bottom = 223.0
 texture = ExtResource("6_6ba24")
 
+[node name="ColorRect" type="ColorRect" parent="front"]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 211.0
+offset_right = 144.0
+offset_bottom = 221.0
+color = Color(0, 0.588235, 0.682353, 1)
+
 [node name="Bonus1" parent="front" instance=ExtResource("7_24rgf")]
 visible = false
 position = Vector2(156, 109)
@@ -277,7 +286,6 @@ texture = ExtResource("17_3rk3r")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="watch/Area2D2"]
 position = Vector2(212.509, 120.249)
 rotation = 0.306916
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_obgb8")
 
 [node name="Area2D3" type="Area2D" parent="watch"]
@@ -285,7 +293,6 @@ shape = SubResource("RectangleShape2D_obgb8")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="watch/Area2D3"]
 position = Vector2(187.897, 177.388)
 rotation = 0.349425
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_055ge")
 
 [node name="Area2D4" type="Area2D" parent="watch"]

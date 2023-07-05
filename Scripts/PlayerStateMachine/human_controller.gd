@@ -94,9 +94,17 @@ func start_turn():
 	super()
 
 
+func end_of_round():
+	super()
+	$CanvasLayer/UI/Reputation.text = str(reputation_points) + " / 100 Reputation"
+
+
 func select_workspace(workspace):
-	super(workspace)
+	if not super(workspace):
+		return
+	await current_client.time_slots_selected
 	ready_button.visible = true
+	current_workspace.evaluate_match()
 
 
 @rpc("call_local", "reliable")

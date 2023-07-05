@@ -42,6 +42,18 @@ func draw_card() -> Card:
 	return cards.pop_back()
 
 
+func draw_cards(num) -> Array[Card]:
+	var x = 0
+	var array: Array[Card] = []
+	for i in range(cards.size() - 1, -1, -1):
+		if x == num:
+			break;
+		array.append(cards[i])
+		cards.remove_at(i)
+		x += 1
+	return array
+
+
 func place(card: Card) -> void:
 	cards.append(card)
 	match type:
