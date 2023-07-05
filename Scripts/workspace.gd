@@ -31,6 +31,17 @@ func remove_client():
 	return c
 
 
+func evaluate_revenue() -> int:
+	if worker == null or client == null:
+		return 0
+	var revenue = 0
+	revenue += client.turns_left * 2
+	for service in client.services:
+		if worker.services.has(service):
+			revenue += Data.service_prices[service]
+	return revenue
+
+
 func evaluate_match():
 	if worker == null or client == null:
 		return

@@ -30,6 +30,17 @@ layout_mode = 2
 offset_top = 312.0
 offset_right = 1152.0
 offset_bottom = 335.0
+text = "$40"
+
+[node name="Cash2" type="Label" parent="CanvasLayer/UI"]
+visible = false
+modulate = Color(0, 1, 0, 1)
+layout_mode = 2
+offset_left = 47.0
+offset_top = 312.0
+offset_right = 1152.0
+offset_bottom = 338.0
+text = "+$8"
 
 [node name="Profit" type="Label" parent="CanvasLayer/UI"]
 layout_mode = 2

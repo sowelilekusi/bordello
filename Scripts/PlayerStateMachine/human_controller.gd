@@ -90,13 +90,38 @@ func _on_confirm_pressed() -> void:
 	rpc("confirm_draft")
 
 
+@rpc("call_local", "reliable")
+func turn_away_client():
+	super()
+	money_delta = 0
+	update_money()
+
+
 func start_turn():
 	super()
+
+
+@rpc("call_local", "reliable")
+func end_turn():
+	super()
+	update_money()
 
 
 func end_of_round():
 	super()
 	$CanvasLayer/UI/Reputation.text = str(reputation_points) + " / 100 Reputation"
+
+
+func update_money():
+	$CanvasLayer/UI/Cash.text = "$" + str(money)
+	$CanvasLayer/UI/Cash2.visible = true
+	$CanvasLayer/UI/Cash2.text = "$" + str(money_delta)
+	if money_delta == 0:
+		$CanvasLayer/UI/Cash2.visible = false
+	if money_delta > 0:
+		$CanvasLayer/UI/Cash2.modulate = Color(0, 1, 0)
+	if money_delta < 0:
+		$CanvasLayer/UI/Cash2.modulate = Color(1, 0, 0)
 
 
 func select_workspace(workspace):
@@ -105,6 +130,8 @@ func select_workspace(workspace):
 	await current_client.time_slots_selected
 	ready_button.visible = true
 	current_workspace.evaluate_match()
+	money_delta = current_workspace.evaluate_revenue()
+	update_money()
 
 
 @rpc("call_local", "reliable")

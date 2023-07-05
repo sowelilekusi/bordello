@@ -14,6 +14,8 @@ var hand = []
 var draft_picked = []
 var draft_pick_amount = 0
 var reputation_points = 0
+var money = 40
+var money_delta = 0
 var board: PlayerBoard
 var current_client: Client
 var current_workspace: Workspace
@@ -80,11 +82,14 @@ func turn_away_client():
 	current_client.set_satisfaction(0)
 	if current_workspace != null:
 		current_workspace.remove_client()
-	current_client = null
+	current_workspace = null
+	#current_client = null
 
 
 @rpc("call_local", "reliable")
 func networked_select_workspace(workspace_path, current_client_path):
+	if board.poor_deck.cards.has(get_node(current_client_path)):
+		board.poor_deck.cards.remove_at(board.poor_deck.cards.find(get_node(current_client_path)))
 	get_node(workspace_path).add_client(get_node(current_client_path))
 	get_node(workspace_path).evaluate_match()
 
@@ -125,7 +130,11 @@ func end_of_round():
 
 @rpc("call_local", "reliable")
 func end_turn():
+	if current_workspace != null:
+		rpc("networked_select_workspace", current_workspace.get_path(), current_client.get_path())
 	board.time_step(false)
 	current_client = null
 	current_workspace = null
+	money += money_delta
+	money_delta = 0
 	turn_finished.emit()
