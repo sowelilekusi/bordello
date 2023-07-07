@@ -36,10 +36,16 @@ func _on_area_2d_mouse_exited() -> void:
 	mouse_exited.emit()
 
 
+func update_label() -> void:
+	$Label.text = str(cards.size())
+
+
 func draw_card() -> Card:
 	if cards.size() == 0:
 		return null
-	return cards.pop_back()
+	var card = cards.pop_back()
+	update_label()
+	return card
 
 
 func draw_cards(num) -> Array[Card]:
@@ -51,6 +57,7 @@ func draw_cards(num) -> Array[Card]:
 		array.append(cards[i])
 		cards.remove_at(i)
 		x += 1
+	update_label()
 	return array
 
 
@@ -61,6 +68,7 @@ func place(card: Card) -> void:
 			card.slide_to_position(_w_pos.x, _w_pos.y, 0.0, 0.2)
 		Type.CLIENT:
 			card.slide_to_position(_c_pos.x, _c_pos.y, 0.0, 0.2)
+	update_label()
 
 
 func shuffle() -> void:
@@ -71,3 +79,4 @@ func order(node_paths) -> void:
 	cards = []
 	for path in node_paths:
 		cards.append(get_node(path))
+	update_label()

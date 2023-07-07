@@ -4,7 +4,7 @@ extends Node
 signal workers_discarded
 signal workers_kept
 signal turn_finished
-signal round_finished
+signal round_finished(int)
 
 var player_info
 @export var hand_position: Node2D
@@ -113,11 +113,8 @@ func confirm_draft():
 
 func start_turn():
 	current_client = board.shift_deck.draw_card()
-	if current_client == null:
-		end_of_round()
-	else:
-		current_client.slide_to_position(board.global_position.x, board.global_position.y, 0.0, 0.3)
-		current_client.turn_front()
+	current_client.slide_to_position(board.global_position.x, board.global_position.y, 0.0, 0.3)
+	current_client.turn_front()
 
 
 func end_of_round():
@@ -125,7 +122,7 @@ func end_of_round():
 	reputation_points += board.process_decks()
 	if reputation_points < 0:
 		reputation_points = 0
-	round_finished.emit()
+	round_finished.emit(player_info["id"])
 
 
 @rpc("call_local", "reliable")
@@ -137,4 +134,6 @@ func end_turn():
 	current_workspace = null
 	money += money_delta
 	money_delta = 0
+	if board.shift_deck.cards.size() == 0:
+		end_of_round()
 	turn_finished.emit()

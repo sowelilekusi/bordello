@@ -37,6 +37,15 @@ position = Vector2(-125, -175)
 [node name="Client" type="Node2D" parent="."]
 position = Vector2(-175, -125)
 
+[node name="Label" type="Label" parent="."]
+offset_left = 145.0
+offset_top = 145.0
+offset_right = 185.0
+offset_bottom = 171.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

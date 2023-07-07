@@ -110,6 +110,9 @@ func end_turn():
 func end_of_round():
 	super()
 	$CanvasLayer/UI/Reputation.text = str(reputation_points) + " / 100 Reputation"
+	game_started = 1
+	ready_button.visible = true
+	ready_label.visible = true
 
 
 func update_money():

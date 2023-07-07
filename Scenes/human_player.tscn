@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://cpl32lvhwd5da"]
 
-[ext_resource type="Script" path="res://Scripts/PlayerStateMachine/human_controller.gd" id="1_4thxs"]
+[ext_resource type="Script" path="res://Scripts/human_controller.gd" id="1_qtukm"]
 [ext_resource type="Theme" uid="uid://d26ldkm1br1bo" path="res://UI_Theme.tres" id="2_ja0q8"]
 
 [node name="HumanPlayer" type="Node2D" node_paths=PackedStringArray("hand_position", "player_cam")]
-script = ExtResource("1_4thxs")
+script = ExtResource("1_qtukm")
 hand_position = NodePath("Node2D")
 player_cam = NodePath("Camera2D")
 

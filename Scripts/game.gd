@@ -5,6 +5,7 @@ signal game_paused
 signal game_resumed
 signal turn_started
 signal round_started
+signal shuffle_sync_recieved
 
 enum PlayerType {HUMAN, BOT}
 
@@ -25,7 +26,8 @@ var current_player := 0
 var players: Array[PlayerController] = []
 var player_boards: Array[PlayerBoard] = []
 var readied_players: Array[int] = []
-var round_number := 0
+var finished_players: Array[int] = []
+var round_number := -1
 var turn_number := 0
 
 var _worker_scene = preload("res://Scenes/worker_card.tscn")
@@ -101,6 +103,7 @@ func add_player(id: int, username: String, type: PlayerType) -> void:
 			controller = _human_scene.instantiate()
 			networked_controllers.append(controller)
 			controller.ready_button_pressed.connect(ready_player)
+			controller.round_finished.connect(finish_player)
 			controller.chat_message_submitted.connect(message)
 			controller.workers_discarded.connect(discard_workers)
 			controller.workers_kept.connect(board.add_to_roster)
@@ -139,17 +142,24 @@ func message(msg):
 	rpc("relay_chat_message", msg)
 
 
+func finish_player(id):
+	if not finished_players.has(id):
+		finished_players.append(id)
+
+
+func are_all_finished() -> bool:
+	return finished_players.size() == players.size()
+
+
 func ready_player(id):
 	if not readied_players.has(id):
 		readied_players.append(id)
 	for player in networked_controllers:
 		player.rpc("update_ready_label", readied_players.size(), players.size())
 	if readied_players.size() == players.size() and is_multiplayer_authority():
-		if round_number == 0:
+		if round_number < 0:
 			rpc("start_game")
 		else:
-			for player in players:
-				player.ready_button_pressed.disconnect(ready_player)
 			rpc("start_round")
 
 
@@ -157,28 +167,54 @@ func ready_player(id):
 func start_game():
 	#Only the host should shuffle the decks
 	readied_players = []
+	finished_players = []
 	round_number += 1
 	if is_multiplayer_authority():
 		randomize()
-		var deck_order = []
-		for card in worker_deck.cards:
-			deck_order.append(card.get_path())
-		rpc("send_worker_order", deck_order)
-		deck_order = []
-		for card in client_deck.cards:
-			deck_order.append(card.get_path())
-		rpc("send_client_order", deck_order)
+		shuffle_and_sync_workers()
+		shuffle_and_sync_clients()
 		for player in players:
 			rpc("draft_workers", player.player_info["username"], 4, 2)
-			rpc("draft_clients", player.player_info["username"])
+
+
+func shuffle_and_sync_workers():
+	if not is_multiplayer_authority():
+		await shuffle_sync_recieved
+		return
+	for x in worker_discard.cards.size():
+		worker_deck.append(worker_discard.draw_card())
+	worker_deck.shuffle()
+	var deck_order = []
+	for card in worker_deck.cards:
+		deck_order.append(card.get_path())
+	rpc("send_worker_order", deck_order)
+
+
+func shuffle_and_sync_clients():
+	if not is_multiplayer_authority():
+		await shuffle_sync_recieved
+		return
+	for x in client_discard.cards.size():
+		client_deck.append(client_discard.draw_card())
+	client_deck.shuffle()
+	var deck_order = []
+	for card in client_deck.cards:
+		deck_order.append(card.get_path())
+	rpc("send_client_order", deck_order)
 
 
 @rpc("call_local", "reliable")
 func start_round():
 	readied_players = []
+	finished_players = []
 	round_number += 1
 	turn_number = 0
 	if is_multiplayer_authority():
+		for player in networked_controllers:
+			player.rpc("update_ready_label", readied_players.size(), players.size())
+		for player in players:
+			rpc("draft_clients", player.player_info["username"])
+			#await clients_drafted
 		rpc("start_turn")
 
 
@@ -186,23 +222,24 @@ func start_round():
 func start_turn():
 	turn_number += 1
 	for x in players.size():
-		#players[x].rpc("start_turn")
 		for other_player in players:
 			other_player.spectate_player(players[x].get_path())
 		players[x].start_turn()
 		await players[x].turn_finished
-	if is_multiplayer_authority():
+	if is_multiplayer_authority() and not are_all_finished():
 		rpc("start_turn")
 
 
 @rpc("reliable")
 func send_worker_order(node_paths):
 	worker_deck.order(node_paths)
+	shuffle_sync_recieved.emit()
 
 
 @rpc("reliable")
 func send_client_order(node_paths):
 	client_deck.order(node_paths)
+	shuffle_sync_recieved.emit()
 
 
 @rpc("call_local", "reliable")
@@ -234,6 +271,8 @@ func draft_clients(player):
 	if controller.reputation_points >= 60:
 		cards_to_draw += 4
 	for x in cards_to_draw - controller.board.shift_deck.cards.size():
+		if client_deck.cards.size() == 0:
+			shuffle_and_sync_clients()
 		controller.board.shift_deck.place(client_deck.draw_card())
 
 
