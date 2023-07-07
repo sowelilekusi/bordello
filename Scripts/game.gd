@@ -36,6 +36,7 @@ var _player_scene = preload("res://Scenes/player_board.tscn")
 var _human_scene = preload("res://Scenes/human_player.tscn")
 var _bot_scene = preload("res://Scenes/bot_player.tscn")
 
+
 func _ready() -> void:
 	_load_workers()
 	_load_clients()
@@ -107,6 +108,7 @@ func add_player(id: int, username: String, type: PlayerType) -> void:
 			controller.chat_message_submitted.connect(message)
 			controller.workers_discarded.connect(discard_workers)
 			controller.workers_kept.connect(board.add_to_roster)
+			controller.hire_pressed.connect(hire)
 			var player_info = {}
 			player_info["id"] = id
 			player_info["username"] = username
@@ -214,7 +216,6 @@ func start_round():
 			player.rpc("update_ready_label", readied_players.size(), players.size())
 		for player in players:
 			rpc("draft_clients", player.player_info["username"])
-			#await clients_drafted
 		rpc("start_turn")
 
 
@@ -242,6 +243,11 @@ func send_client_order(node_paths):
 	shuffle_sync_recieved.emit()
 
 
+func hire(player):
+	if is_multiplayer_authority():
+		rpc("draft_workers", player, 4, 1)
+
+
 @rpc("call_local", "reliable")
 func draft_workers(player, draw_amount, pick_amount):
 	var cards = []
@@ -266,9 +272,9 @@ func draft_clients(player):
 		if player_controller.player_info["username"] == player:
 			controller = player_controller
 	var cards_to_draw = 4
-	if controller.reputation_points >= 30:
+	if controller.reputation_points >= 20:
 		cards_to_draw += 4
-	if controller.reputation_points >= 60:
+	if controller.reputation_points >= 40:
 		cards_to_draw += 4
 	for x in cards_to_draw - controller.board.shift_deck.cards.size():
 		if client_deck.cards.size() == 0:

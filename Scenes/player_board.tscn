@@ -5,13 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://y2i3u6n1oowh" path="res://Scenes/deck.tscn" id="3_ypq4b"]
 [ext_resource type="PackedScene" uid="uid://baoec8cqmedf6" path="res://Scenes/worker_slot.tscn" id="4_o73ea"]
 
-[node name="PlayerBoard" type="Node2D" node_paths=PackedStringArray("poor_deck", "good_deck", "great_deck", "shift_deck", "slots")]
+[node name="PlayerBoard" type="Node2D" node_paths=PackedStringArray("poor_deck", "good_deck", "great_deck", "shift_deck", "slots", "client_view_position")]
 script = ExtResource("1_dj0oi")
 poor_deck = NodePath("PoorDeck")
 good_deck = NodePath("GoodDeck")
 great_deck = NodePath("GreatDeck")
 shift_deck = NodePath("ShiftDeck")
 slots = [NodePath("Slot1"), NodePath("Slot2"), NodePath("Slot3"), NodePath("Slot4")]
+client_view_position = NodePath("ClientViewPosition")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_rx76r")
@@ -43,3 +44,6 @@ position = Vector2(255, 235)
 
 [node name="Slot4" parent="." instance=ExtResource("4_o73ea")]
 position = Vector2(785, 235)
+
+[node name="ClientViewPosition" type="Node2D" parent="."]
+position = Vector2(296, -194)

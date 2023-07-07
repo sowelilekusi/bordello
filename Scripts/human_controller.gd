@@ -99,6 +99,8 @@ func turn_away_client():
 
 func start_turn():
 	super()
+	$CanvasLayer/UI/Hire.visible = false
+	$CanvasLayer/UI/Label.visible = false
 
 
 @rpc("call_local", "reliable")
@@ -109,10 +111,12 @@ func end_turn():
 
 func end_of_round():
 	super()
-	$CanvasLayer/UI/Reputation.text = str(reputation_points) + " / 100 Reputation"
+	$CanvasLayer/UI/Reputation.text = str(reputation_points) + " / 60 Reputation"
 	game_started = 1
 	ready_button.visible = true
 	ready_label.visible = true
+	$CanvasLayer/UI/Hire.visible = true
+	$CanvasLayer/UI/Label.visible = true
 
 
 func update_money():
@@ -141,3 +145,9 @@ func select_workspace(workspace):
 func confirm_draft():
 	super()
 	ready_button.visible = true
+
+
+func _on_hire_pressed() -> void:
+	print("hire button pushed")
+	rpc("attempt_hire")
+	update_money()

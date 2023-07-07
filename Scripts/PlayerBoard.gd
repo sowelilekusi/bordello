@@ -1,15 +1,18 @@
 class_name PlayerBoard
 extends Node2D
 
+signal clients_discarded(cards: Array[NodePath])
+
 var player_info = {}
 var workers = []
 var roster = []
-signal clients_discarded(cards: Array[NodePath])
+
 @export var poor_deck: Deck
 @export var good_deck: Deck
 @export var great_deck: Deck
 @export var shift_deck: Deck
 @export var slots: Array[Workspace] = []
+@export var client_view_position: Node2D
 
 
 func add_to_roster(node_paths):
@@ -20,6 +23,14 @@ func add_to_roster(node_paths):
 	for x in 4:
 		if x < roster.size():
 			slots[x].add_worker(roster[x])
+
+
+func empty_slots() -> int:
+	var x = 0
+	for i in slots:
+		if i.worker == null:
+			x += 1
+	return x
 
 
 func draw_client():

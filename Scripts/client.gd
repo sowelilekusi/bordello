@@ -39,10 +39,6 @@ func setup(_title, _initial_stress, _time_slots, _services):
 	for x in time_button_sprites.size():
 		if time_slots[x] == true:
 			time_button_sprites[x].visible = true
-	$front/Slice1.visible = false
-	$front/Slice2.visible = false
-	$front/Slice3.visible = false
-	$front/Slice4.visible = false
 	if time_slots[0] == true:
 		$front/Slice1.visible = true
 	if time_slots[1] == true:
@@ -58,7 +54,7 @@ func setup(_title, _initial_stress, _time_slots, _services):
 			continue
 		icon_list[x - 1].set_service(services[x])
 		icon_list[x - 1].visible = true
-	good_threshold = 10 - (5 - services.size())
+	good_threshold = 10 - (6 - services.size())
 	medium_threshold = 4
 	if time_slots[3] == false:
 		good_threshold -= 1

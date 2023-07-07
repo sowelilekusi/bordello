@@ -236,8 +236,9 @@ layout_mode = 2
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-text = "0 / 100 Reputation"
+text = "0 / 60 Reputation"
 
 [connection signal="pressed" from="CanvasLayer/UI/Confirm" to="." method="_on_confirm_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/HBoxContainer/LobbyReadyButton" to="." method="_on_lobby_ready_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Hire" to="." method="_on_hire_pressed"]
 [connection signal="text_submitted" from="CanvasLayer/UI/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

@@ -225,8 +225,9 @@ texture = ExtResource("4_tye4g")
 
 [node name="watch" type="TextureRect" parent="."]
 visible = false
+offset_top = -136.0
 offset_right = 350.0
-offset_bottom = 250.0
+offset_bottom = 114.0
 texture = ExtResource("9_uqpfx")
 
 [node name="time1" type="TextureRect" parent="watch"]

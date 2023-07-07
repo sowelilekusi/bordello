@@ -1,21 +1,23 @@
 class_name Worker
 extends Card
 
+signal card_clicked(card)
+
 var title = "New Card"
-var max_supers = 2
 var capacity = 8
 var stress = 0
-signal card_clicked(card)
+var in_hand = false
+var hand_ratio
+var hand_position = Vector2(0, 0)
+var hovered = false
+
 @export var spread_curve : Curve
 @export var height_curve : Curve
 @export var rotation_curve : Curve
 @export var hand_width : float
 @export var hand_height : float
 @export var hand_rotation : float
-var in_hand = false
-var hand_ratio
-var hand_position = Vector2(0, 0)
-var hovered = false
+
 
 func _process(delta):
 	if sliding:
@@ -29,6 +31,7 @@ func _process(delta):
 		position.x = hand_position.x + spread_curve.sample(hand_ratio) * (hand_width + (hand_width * 0.2))
 		rotation = rotation_curve.sample(hand_ratio) * (hand_rotation + (hand_rotation * 0.2))
 
+
 func get_icon(x):
 	var y = 32
 	if x > 8:
@@ -36,6 +39,7 @@ func get_icon(x):
 	else:
 		y += x * 32
 	return y
+
 
 func setup(_title, _capacity, _services):
 	if _title != "":
@@ -91,10 +95,12 @@ func _on_area_2d_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		emit_signal("card_clicked", self)
 
+
 func increase_stress(amount) -> bool:
 	stress += amount
 	$Label.text = str(stress)
 	return stress > capacity
+
 
 func decrease_stress(amount):
 	stress -= amount

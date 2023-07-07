@@ -5,6 +5,7 @@ signal workers_discarded
 signal workers_kept
 signal turn_finished
 signal round_finished(int)
+signal hire_pressed(String)
 
 var player_info
 @export var hand_position: Node2D
@@ -58,7 +59,7 @@ func networked_select_card(add, card_path):
 func select_workspace(workspace):
 	if not is_multiplayer_authority():
 		return false
-	if current_client == null or workspace.worker == null:
+	if current_client == null or workspace.worker == null or workspace.worker.stress >= workspace.worker.capacity:
 		return false
 	if workspace == current_workspace or workspace.client != null:
 		return false
@@ -113,7 +114,10 @@ func confirm_draft():
 
 func start_turn():
 	current_client = board.shift_deck.draw_card()
-	current_client.slide_to_position(board.global_position.x, board.global_position.y, 0.0, 0.3)
+	var pos: Vector2
+	pos.x = board.client_view_position.global_position.x
+	pos.y = board.client_view_position.global_position.y
+	current_client.slide_to_position(pos.x, pos.y, 0.0, 0.3)
 	current_client.turn_front()
 
 
@@ -137,3 +141,12 @@ func end_turn():
 	if board.shift_deck.cards.size() == 0:
 		end_of_round()
 	turn_finished.emit()
+
+
+@rpc("call_local", "reliable")
+func attempt_hire():
+	if board.empty_slots() < 1 or money < 50:
+		return
+	print("attempt hire didnt fail")
+	money -= 50
+	hire_pressed.emit(player_info["username"])

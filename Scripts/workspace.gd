@@ -54,16 +54,23 @@ func evaluate_match():
 
 
 func time_step(skip_ahead: bool):
-	if worker == null or client == null:
+	if worker == null and client == null:
 		return null
-	client.turns_left -= 1
-	if skip_ahead:
-		client.turns_left = 0
-	client.update_counter()
-	if client.turns_left > 0:
-		return null
+	elif worker != null and client == null:
+		worker.decrease_stress(1)
 	else:
-		return remove_client()
+		if skip_ahead:
+			worker.decrease_stress(client.turns_left)
+			client.turns_left = 0
+		else:
+			worker.increase_stress(1)
+			client.turns_left -= 1
+		client.update_counter()
+		if client.turns_left > 0:
+			return null
+		else:
+			return remove_client()
+	return null
 
 
 func _on_area2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
