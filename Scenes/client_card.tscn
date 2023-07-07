@@ -40,8 +40,12 @@ size = Vector2(60.7945, 58.1036)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_70vuu"]
 size = Vector2(350, 250)
 
-[node name="Card" type="Node2D" node_paths=PackedStringArray("watch")]
+[node name="Card" type="Node2D" node_paths=PackedStringArray("pip_sprites", "icon_list", "time_button_sprites", "time_hovered_sprites", "watch")]
 script = ExtResource("1_bvmvn")
+pip_sprites = [NodePath("front/pip2"), NodePath("front/pip3"), NodePath("front/pip4"), NodePath("front/pip5"), NodePath("front/pip6"), NodePath("front/pip7"), NodePath("front/pip8"), NodePath("front/pip9")]
+icon_list = [NodePath("front/Bonus1"), NodePath("front/Bonus2"), NodePath("front/Bonus3"), NodePath("front/Bonus4")]
+time_button_sprites = [NodePath("watch/time1"), NodePath("watch/time2"), NodePath("watch/time3"), NodePath("watch/time4")]
+time_hovered_sprites = [NodePath("watch/time_hovered1"), NodePath("watch/time_hovered2"), NodePath("watch/time_hovered3"), NodePath("watch/time_hovered4")]
 watch = NodePath("watch")
 
 [node name="front" type="TextureRect" parent="."]

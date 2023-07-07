@@ -10,19 +10,6 @@ signal clients_discarded(cards: Array[NodePath])
 @export var great_deck: Deck
 @export var shift_deck: Deck
 @export var slots: Array[Workspace] = []
-#Workaround for bug in 4.0.3.stable
-@export var slot1: Workspace
-@export var slot2: Workspace
-@export var slot3: Workspace
-@export var slot4: Workspace
-
-
-func _ready():
-	#Workaround for bug in 4.0.3.stable
-	slots.append(slot1)
-	slots.append(slot2)
-	slots.append(slot3)
-	slots.append(slot4)
 
 
 func add_to_roster(node_paths):
@@ -56,12 +43,6 @@ func process_decks() -> int:
 	poor_deck.shuffle()
 	good_deck.shuffle()
 	great_deck.shuffle()
-	#print("Cards in poor deck: " + str(poor_deck.cards.size()))
-	#print("Cards discarded from poor deck: " + str(poor_deck.cards.size() - 1))
-	#print("Cards in good deck: " + str(good_deck.cards.size()))
-	#print("Cards discarded from good deck: " + str(ceil(good_deck.cards.size() / 2.0)))
-	#print("Cards in great deck: " + str(great_deck.cards.size()))
-	#print("Cards discarded from great deck: " + str(min(great_deck.cards.size(), 1)))
 	for card in poor_deck.draw_cards(poor_deck.cards.size() - 1):
 		discards.append(card.get_path())
 	for card in good_deck.draw_cards(ceil(good_deck.cards.size() / 2.0)):

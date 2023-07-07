@@ -11,38 +11,16 @@ var title = "New Task"
 var initial_stress = 0
 var turns_left = 4
 var time_slots = [true, true, false, true]
-var icon_list = []
 var medium_threshold := 5
 var good_threshold := 8
 var satisfaction := 1
 var watch_on := false
+
 @export var pip_sprites: Array[TextureRect] = []
+@export var icon_list: Array[Node2D] = []
 @export var time_button_sprites: Array[TextureRect] = []
 @export var time_hovered_sprites: Array[TextureRect] = []
 @export var watch: TextureRect
-
-
-func _ready():
-	pip_sprites.append($front/pip2)
-	pip_sprites.append($front/pip3)
-	pip_sprites.append($front/pip4)
-	pip_sprites.append($front/pip5)
-	pip_sprites.append($front/pip6)
-	pip_sprites.append($front/pip7)
-	pip_sprites.append($front/pip8)
-	pip_sprites.append($front/pip9)
-	icon_list.append($front/Bonus1)
-	icon_list.append($front/Bonus2)
-	icon_list.append($front/Bonus3)
-	icon_list.append($front/Bonus4)
-	time_button_sprites.append($watch/time1)
-	time_button_sprites.append($watch/time2)
-	time_button_sprites.append($watch/time3)
-	time_button_sprites.append($watch/time4)
-	time_hovered_sprites.append($watch/time_hovered1)
-	time_hovered_sprites.append($watch/time_hovered2)
-	time_hovered_sprites.append($watch/time_hovered3)
-	time_hovered_sprites.append($watch/time_hovered4)
 
 
 func _process(delta):

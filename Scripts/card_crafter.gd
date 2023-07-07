@@ -2,8 +2,9 @@ extends Node2D
 
 var card_scene = preload("res://Scenes/worker_card.tscn")
 var icon_order = [0, 1, 3, 5, 7, 8, 6, 4, 2]
-var symbol_buttons : Array[TextureButton] = []
-var symbol_count_labels : Array[LineEdit] = []
+
+@export var symbol_buttons : Array[TextureButton] = []
+@export var symbol_count_labels : Array[LineEdit] = []
 
 var card_array = []
 var selected_card = 0
@@ -16,26 +17,6 @@ var WORKER_DECK_SAVE_PATH = "user://worker_deck.json"
 #"worker 2": [10, 1, 3, 4, 8]
 
 func _ready():
-	#workaround for node array export bug present in Godot 4.0.3.Stable
-	symbol_buttons.append($"crossbutton")
-	symbol_buttons.append($"squarebutton")
-	symbol_buttons.append($"trianglebutton")
-	symbol_buttons.append($"crescentbutton")
-	symbol_buttons.append($"puppybutton")
-	symbol_buttons.append($"riverbutton")
-	symbol_buttons.append($"starbutton")
-	symbol_buttons.append($"chainbutton")
-	symbol_buttons.append($"gustbutton")
-	symbol_count_labels.append($"crosscount")
-	symbol_count_labels.append($"squarecount")
-	symbol_count_labels.append($"trianglecount")
-	symbol_count_labels.append($"crescentcount")
-	symbol_count_labels.append($"puppycount")
-	symbol_count_labels.append($"rivercount")
-	symbol_count_labels.append($"starcount")
-	symbol_count_labels.append($"chaincount")
-	symbol_count_labels.append($"gustcount")
-	
 	load_deck()
 
 func new_deck():

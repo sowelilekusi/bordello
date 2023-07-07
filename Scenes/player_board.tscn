@@ -1,20 +1,17 @@
 [gd_scene load_steps=5 format=3 uid="uid://bvxgkv7pwxh7"]
 
-[ext_resource type="Script" path="res://PlayerBoard.gd" id="1_80bvu"]
+[ext_resource type="Script" path="res://Scripts/PlayerBoard.gd" id="1_dj0oi"]
 [ext_resource type="Texture2D" uid="uid://olxh7d7xkr5k" path="res://Assets/player_board.png" id="2_rx76r"]
 [ext_resource type="PackedScene" uid="uid://y2i3u6n1oowh" path="res://Scenes/deck.tscn" id="3_ypq4b"]
 [ext_resource type="PackedScene" uid="uid://baoec8cqmedf6" path="res://Scenes/worker_slot.tscn" id="4_o73ea"]
 
-[node name="PlayerBoard" type="Node2D" node_paths=PackedStringArray("poor_deck", "good_deck", "great_deck", "shift_deck", "slot1", "slot2", "slot3", "slot4")]
-script = ExtResource("1_80bvu")
+[node name="PlayerBoard" type="Node2D" node_paths=PackedStringArray("poor_deck", "good_deck", "great_deck", "shift_deck", "slots")]
+script = ExtResource("1_dj0oi")
 poor_deck = NodePath("PoorDeck")
 good_deck = NodePath("GoodDeck")
 great_deck = NodePath("GreatDeck")
 shift_deck = NodePath("ShiftDeck")
-slot1 = NodePath("Slot1")
-slot2 = NodePath("Slot2")
-slot3 = NodePath("Slot3")
-slot4 = NodePath("Slot4")
+slots = [NodePath("Slot1"), NodePath("Slot2"), NodePath("Slot3"), NodePath("Slot4")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_rx76r")

@@ -45,8 +45,10 @@ region = Rect2(256, 0, 32, 32)
 atlas = SubResource("CompressedTexture2D_p5rfg")
 region = Rect2(288, 0, 32, 32)
 
-[node name="Card Crafter" type="Node2D"]
+[node name="Card Crafter" type="Node2D" node_paths=PackedStringArray("symbol_buttons", "symbol_count_labels")]
 script = ExtResource("1_lgqnu")
+symbol_buttons = [NodePath("crossbutton"), NodePath("squarebutton"), NodePath("trianglebutton"), NodePath("crescentbutton"), NodePath("puppybutton"), NodePath("riverbutton"), NodePath("starbutton"), NodePath("chainbutton"), NodePath("gustbutton")]
+symbol_count_labels = [NodePath("crosscount"), NodePath("squarecount"), NodePath("trianglecount"), NodePath("crescentcount"), NodePath("puppycount"), NodePath("rivercount"), NodePath("starcount"), NodePath("chaincount"), NodePath("gustcount")]
 
 [node name="main_camera" type="Camera2D" parent="."]
 zoom = Vector2(0.6, 0.6)

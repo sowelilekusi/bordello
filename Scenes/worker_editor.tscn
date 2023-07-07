@@ -4,8 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://d127pfpldgh1l" path="res://Assets/generatordesign.png" id="2_1kq1c"]
 [ext_resource type="PackedScene" uid="uid://b41yu27wmglap" path="res://Scenes/icon_button.tscn" id="3_421r6"]
 
-[node name="Card Crafter" type="Node2D"]
+[node name="Card Crafter" type="Node2D" node_paths=PackedStringArray("symbol_buttons", "symbol_count_labels")]
 script = ExtResource("1_vn0ae")
+symbol_buttons = [NodePath("crossbutton"), NodePath("squarebutton"), NodePath("trianglebutton"), NodePath("crescentbutton"), NodePath("puppybutton"), NodePath("riverbutton"), NodePath("starbutton"), NodePath("chainbutton"), NodePath("gustbutton")]
+symbol_count_labels = [NodePath("crosscount"), NodePath("squarecount"), NodePath("trianglecount"), NodePath("crescentcount"), NodePath("puppycount"), NodePath("rivercount"), NodePath("starcount"), NodePath("chaincount"), NodePath("gustcount")]
 
 [node name="main_camera" type="Camera2D" parent="."]
 zoom = Vector2(0.6, 0.6)
